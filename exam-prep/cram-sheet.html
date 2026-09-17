@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>UNIX Shell Programming — Last-Minute Cram Sheet</title>
+<style>
+@page { size:A4; margin:10mm 9mm 11mm; }
+*{box-sizing:border-box}
+body{font-family:"Inter","Helvetica Neue",Arial,sans-serif;font-size:8.3pt;line-height:1.38;color:#14171c;margin:0}
+h1{font-size:17pt;margin:0;letter-spacing:-0.5px}
+.hdr{background:#14171c;color:#fff;padding:4mm 5mm;margin-bottom:3mm}
+.hdr .s{font-size:8pt;color:#b9c2cd;margin-top:1.2mm}
+.unit{border:1.4pt solid #14171c;margin-bottom:3mm;page-break-inside:avoid}
+.ub{background:#14171c;color:#fff;padding:1.8mm 3mm;display:flex;justify-content:space-between;align-items:baseline}
+.ub .n{font-size:11pt;font-weight:700;letter-spacing:-0.3px}
+.ub .sec{font-size:7.8pt;color:#c9d2dc;font-weight:600}
+.ui{padding:2.5mm 3mm}
+.q{margin-bottom:2.4mm;padding-bottom:2.2mm;border-bottom:0.4pt dotted #b6bec9}
+.q:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.qt{font-weight:700;font-size:8.8pt;margin-bottom:1mm;color:#14171c}
+.tag{display:inline-block;font-size:6.6pt;font-weight:700;padding:0.5mm 1.4mm;border-radius:2px;color:#fff;margin-right:1.4mm;vertical-align:1.2px;letter-spacing:0.3px}
+.lock{background:#17683a}.likely{background:#b5730b}.new{background:#6b3fa0}.bk{background:#5a6472}
+.slot{font-size:7.2pt;color:#4a5360;font-weight:600;margin-bottom:1mm}
+.sk{font-size:7.9pt;color:#232931;line-height:1.42}
+.sk b{color:#14171c}
+code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:7.4pt;background:#eef1f5;padding:0.2mm 0.8mm;border-radius:2px}
+.verd{background:#17683a;color:#fff;padding:1.5mm 2.5mm;font-size:7.9pt;font-weight:600;margin-bottom:2.5mm}
+.pa{background:#f2f5f8;border-left:2.6pt solid #14171c;padding:1.8mm 2.5mm;margin-top:2mm;font-size:7.7pt}
+.pa .lab{font-size:7.4pt;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;color:#4a5360}
+pre{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:7.1pt;background:#f2f5f8;border-left:2pt solid #8b95a3;padding:1.6mm 2.4mm;margin:1mm 0;line-height:1.32;white-space:pre}
+.warn{background:#fdf3f2;border-left:2.6pt solid #b3261e;padding:2mm 3mm;margin-bottom:3mm;font-size:8pt}
+.two{display:flex;gap:2.5mm}.two>div{flex:1}
+table{width:100%;border-collapse:collapse;font-size:7.5pt;margin:1mm 0}
+td{padding:0.9mm 1.4mm;border-bottom:0.3pt solid #ccd2da;vertical-align:top}
+td:first-child{font-weight:600;width:31%}
+.ft{margin-top:2mm;font-size:7pt;color:#5a6472;border-top:0.8pt solid #14171c;padding-top:1.5mm}
+</style></head><body>
+
+<div class="hdr">
+<h1>UNIX Shell Programming — Last-Minute Cram Sheet</h1>
+<div class="s"><b>24CSAEC39 / CSAEC310</b> · Sem III · 50 marks · 2 hrs &nbsp;|&nbsp; <b>Part A</b> 10×1, no choice, 2 per unit &nbsp;|&nbsp; <b>Part B</b> 5×8, one full question per unit from a choice of two</div>
+</div>
+
+<div class="warn">
+<b>Before anything else:</b> your past papers are from an <b>older syllabus</b>. Their Unit V was grep/regex/sed — in <b>your</b> paper grep sits in Unit IV and <b>Unit V is shell scripting</b>, with zero past-paper history. <b>Skip <code>sed</code> and <code>awk</code> entirely — not in your syllabus.</b> If you only have an hour, do Unit V last but <i>do</i> it: it's 8 marks you'd otherwise drop cold.
+</div>
+
+<!-- UNIT I -->
+<div class="unit">
+<div class="ub"><span class="n">UNIT I — Introduction to UNIX</span><span class="sec">PART B · Q1 or Q2 · 8 marks &nbsp;|&nbsp; PART A · Q1, Q2</span></div>
+<div class="ui">
+<div class="verd">Q1 = diagram + theory.&nbsp; Q2 = commands + permissions.&nbsp; Prepare all four below and either choice is safe.</div>
+
+<div class="q"><div class="qt"><span class="tag lock">LOCK</span>UNIX architecture / kernel–shell relationship — explain with a neat diagram</div>
+<div class="slot">Part B · <b>Q1(a)</b> · 4–5 marks · appeared Apr 23 + Mar 24</div>
+<div class="sk"><b>Draw concentric circles:</b> Hardware (centre) → Kernel → Shell → Applications/Users (outer).<br>
+<b>Kernel:</b> core of the OS, loaded at boot, stays in memory. Manages memory, processes, files, devices. Only the kernel talks to hardware. Programs reach it through <b>system calls</b>.<br>
+<b>Shell:</b> the command interpreter between user and kernel. Reads command → interprets → passes to kernel → returns output. Shell is a user program, so many can exist: <b>Bourne (sh), C (csh), Korn (ksh), Bash</b>.<br>
+Mention the <b>shell interpretive cycle</b>: prompt → read → parse → locate command in <code>PATH</code> → fork/exec → wait → prompt again.</div></div>
+
+<div class="q"><div class="qt"><span class="tag lock">LOCK</span>File permissions + <code>chmod</code> using absolute AND relative methods</div>
+<div class="slot">Part B · <b>Q2</b> · 3–4 marks · Part B 2 of 3 papers, <b>Part A 3 of 3</b></div>
+<div class="sk">9 bits = 3 sets (<b>owner / group / others</b>) × <b>rwx</b>. <code>ls -l</code> shows <code>-rwxr-xr-x</code>.<br>
+<b>Absolute (octal):</b> r=4, w=2, x=1 → add them. <code>chmod 755 file</code> → rwxr-xr-x. <code>chmod 644</code> → rw-r--r--. <code>chmod 744</code> → rwxr--r--.<br>
+<b>Relative (symbolic):</b> <b>3 components</b> — <i>who</i> (u/g/o/a) + <i>operator</i> (+ − =) + <i>permission</i> (r/w/x). <code>chmod u+x file</code>, <code>chmod go-w file</code>, <code>chmod a=r file</code>.<br>
+Directory meaning: r = list it, w = create/delete files in it, x = cd into it. Default file perms <b>666 (rw-rw-rw-)</b>, directories 777, masked by <code>umask</code>.</div></div>
+
+<div class="q"><div class="qt"><span class="tag lock">LOCK</span>Explain the following commands with syntax, options and example <i>(list changes every year)</i></div>
+<div class="slot">Part B · <b>Q1(b) or Q2(a)</b> · 4–5 marks · <b>3 of 3 papers</b></div>
+<div class="sk">Format each as <b>syntax + 2 options + 1 example</b> — that's how marks are awarded. Most-asked set:<br>
+<code>echo</code> display text (-n no newline, -e escapes) · <code>ls</code> (-l long, -a hidden, -R recursive, -t by time) · <code>who</code> logged-in users (-H heading, am i) · <code>date</code> (+%d-%m-%Y format) · <code>passwd</code> change password · <code>cp</code> (-i interactive, -r recursive) · <code>mv</code> rename/move (-i) · <code>rm</code> (-i, -r, -f) · <code>cat</code> (-n number, -s squeeze) · <code>wc</code> (-l lines, -w words, -c chars) · <code>mkdir</code> (-p) · <code>rmdir</code> · <code>pwd</code> · <code>uname</code> (-a, -r) · <code>man</code> · <code>tar</code> (-cvf, -xvf, -tvf) · <code>gzip</code>/<code>gunzip</code></div></div>
+
+<div class="q"><div class="qt"><span class="tag likely">BACKUP</span><code>vi</code> editor modes &nbsp;·&nbsp; Salient features of UNIX</div>
+<div class="slot">Part B · Q1 · 4 marks each · vi = Aug 23, features = Mar 24</div>
+<div class="sk"><b>vi — 3 modes:</b> <b>Command mode</b> (default; navigation h j k l, <code>dd</code> delete line, <code>yy</code> copy, <code>p</code> paste, <code>x</code> delete char) · <b>Insert mode</b> (enter with i a o I A O, leave with <b>Esc</b>) · <b>ex / Escape mode</b> (<code>:w</code> save, <code>:q</code> quit, <code>:wq</code> save+quit, <code>:q!</code> force quit, <code>:set nu</code>).<br>
+<b>Features:</b> multi-user, multitasking, portability (written in C), hierarchical file system, security via permissions, the shell as programmable interface, pipes &amp; filters (building-block approach), communication utilities, large tool set.</div></div>
+
+<div class="pa"><span class="lab">Part A · Q1, Q2 — memorise</span><br>
+Shell is both a <b>scripting language and an interpreter</b> · Default ordinary-file permission <b>rw-rw-rw-</b> · <code>755</code> = rwxr-xr-x, <code>744</code> = rwxr--r-- · Relative-mode expression has <b>3 components</b></div>
+</div></div>
+
+<!-- UNIT II -->
+<div class="unit">
+<div class="ub"><span class="n">UNIT II — Shells &amp; Utilities</span><span class="sec">PART B · Q3 or Q4 · 8 marks &nbsp;|&nbsp; PART A · Q3, Q4</span></div>
+<div class="ui">
+<div class="verd">★ ANSWER Q3. The session diagram is 3-for-3 in the Q3(a) slot and always pairs with a process question in 3(b).</div>
+
+<div class="q"><div class="qt"><span class="tag lock">HIGHEST CONFIDENCE ON THE PAPER</span>Illustrate the various stages of a UNIX session with a neat diagram</div>
+<div class="slot">Part B · <b>Q3(a)</b> · 4–5 marks · <b>ALL 3 PAPERS, same slot, near-identical wording</b></div>
+<div class="sk"><b>Draw as a flow:</b> Login prompt → enter username → password prompt (not echoed) → verify against <code>/etc/passwd</code> and <code>/etc/shadow</code> → <b>if invalid, back to login</b> → valid: shell starts, reads <code>/etc/profile</code> then <code>.profile</code> / <code>.bash_profile</code> → <b>$ prompt</b> → <b>work phase:</b> shell interpretive cycle repeats (read → parse → execute → display) → logout via <code>exit</code> or <b>Ctrl+D</b> → back to login prompt.<br>
+Three stages to name: <b>Login → Work/Session → Logout</b>.</div></div>
+
+<div class="q"><div class="qt"><span class="tag lock">LOCK</span>Process utilities — types of process, initialization &amp; termination, <code>nice</code> / <code>renice</code></div>
+<div class="slot">Part B · <b>Q3(b)</b> · 4–5 marks · <b>3 of 3 papers</b>, angle rotates — cover all three</div>
+<div class="sk"><b>Types:</b> interactive/foreground, background (<code>&amp;</code>), daemon (system background, e.g. <code>init</code>, <code>cron</code>), zombie (finished but parent hasn't collected status), orphan (parent died, adopted by <code>init</code>).<br>
+<b>Init &amp; termination:</b> <code>fork()</code> creates a child (copy of parent), <code>exec()</code> overlays it with the new program, parent <code>wait()</code>s, child <code>exit()</code>s returning status. <b><code>init</code> is PID 1</b>, ancestor of every process. Boot order: <code>init</code> → <code>getty</code> → <code>login</code> → shell.<br>
+<b>Priority:</b> <b>nice value −20 (highest priority) to +19 (lowest)</b>, default 0. <code>nice -n 10 command</code> starts a command at lower priority. <code>renice -n 5 -p PID</code> changes a <b>running</b> process. Only <b>root</b> can raise priority (negative nice).<br>
+<b>Related:</b> <code>ps</code> (-f full, -e all, -u user), <code>kill PID</code>, <code>kill -9</code>, <code>jobs</code>.</div></div>
+
+<div class="q"><div class="qt"><span class="tag likely">BACKUP · Q4</span><code>du</code> with options &nbsp;·&nbsp; text processing commands &nbsp;·&nbsp; networking commands</div>
+<div class="slot">Part B · Q4 · 3–5 marks · du 2 of 3, text processing 2 of 3, networking Mar 24</div>
+<div class="sk"><b><code>du</code></b> disk usage per directory: <code>-a</code> all files not just dirs, <code>-s</code> summary total only, <code>-h</code> human readable, <code>-k</code> in KB. (<code>df</code> = free space on file systems, <code>-h</code>, <code>-i</code> inodes.)<br>
+<b>Text processing:</b> <code>head</code> <code>tail</code> <code>cut</code> <code>paste</code> <code>sort</code> <code>uniq</code> <code>tr</code> <code>wc</code> <code>grep</code> — name it, give syntax, one example.<br>
+<b>Networking:</b> <code>ping</code> tests reachability (ICMP echo) · <code>host</code> DNS name↔IP lookup · <code>tracepath</code>/<code>traceroute</code> shows the route hop by hop · <code>netstat</code> network connections and statistics · <code>route</code> <b>manipulates the TCP/IP routing table</b> · also <code>ftp</code>, <code>telnet</code>, <code>ssh</code>, <code>finger</code>, <code>ifconfig</code>.</div></div>
+
+<div class="pa"><span class="lab">Part A · Q3, Q4 — memorise</span><br>
+<code>ps</code> shows process attributes · <code>tar -c</code> create archive, <code>-x</code> extract, <code>-t</code> list, <code>-f</code> filename · <code>ping</code> = reachability · <code>route</code> = TCP/IP routing table · file comparison = <code>cmp</code> / <code>comm</code> / <code>diff</code></div>
+</div></div>
+
+<!-- UNIT III -->
+<div class="unit">
+<div class="ub"><span class="n">UNIT III — Standard Streams</span><span class="sec">PART B · Q5 or Q6 · 8 marks &nbsp;|&nbsp; PART A · Q5, Q6</span></div>
+<div class="ui">
+<div class="verd">★ ANSWER Q5. Streams/redirection is 3-for-3 in the Q5(a) slot. The (b) partner rotates between tee / variables / job states — all three are below.</div>
+
+<div class="q"><div class="qt"><span class="tag lock">HIGHEST CONFIDENCE</span>Explain the three standard streams / standard redirection files of UNIX</div>
+<div class="slot">Part B · <b>Q5(a)</b> · 3–5 marks · <b>ALL 3 PAPERS, same slot</b></div>
+<div class="sk">Every process opens three files by default:<br>
+<b>stdin — fd 0</b> — standard input — default <b>keyboard</b><br>
+<b>stdout — fd 1</b> — standard output — default <b>terminal/screen</b><br>
+<b>stderr — fd 2</b> — standard error — default <b>terminal/screen</b><br>
+<b>Redirection:</b> <code>&gt;</code> output, overwrite · <code>&gt;&gt;</code> output, append · <code>&lt;</code> input · <code>2&gt;</code> errors · <code>2&gt;&gt;</code> append errors · <code>&gt; file 2&gt;&amp;1</code> both to one file · <code>/dev/null</code> discards.<br>
+<b>Examples:</b> <code>ls -l &gt; out.txt</code> · <code>wc -l &lt; file</code> · <code>cmd 2&gt; err.log</code> · <code>sort &lt; in.txt &gt; out.txt</code><br>
+<b>Diagram:</b> a box labelled <i>command</i>, arrow 0 going in, arrows 1 and 2 coming out.</div></div>
+
+<div class="q"><div class="qt"><span class="tag lock">LOCK</span>The <code>tee</code> command — demonstrate it in a pipeline, with a diagram</div>
+<div class="slot">Part B · <b>Q5(b) or Q6(a)</b> · 4–5 marks · 2 of 3 papers + a Part A MCQ</div>
+<div class="sk"><code>tee</code> reads standard input and writes it to <b>standard output AND to one or more files at the same time</b> — it's a T-junction in a pipe. Lets you save intermediate output without breaking the pipeline.<br>
+Syntax: <code>tee [-a] file</code> &nbsp;(<code>-a</code> appends instead of overwriting)<br>
+<code>ls -l | tee list.txt | wc -l</code> — saves the listing <i>and</i> passes it on to <code>wc</code>.<br>
+<b>Diagram:</b> input arrow → <b>tee</b> box → two output arrows, one to <i>screen</i>, one to <i>file</i>.</div></div>
+
+<div class="q"><div class="qt"><span class="tag likely">HIGH</span>Types of variables / environment variables &nbsp;·&nbsp; alias &nbsp;·&nbsp; command substitution</div>
+<div class="slot">Part B · Q5(b) or Q6(b) · 3–4 marks · one of these three fills the slot</div>
+<div class="sk"><b>Variables:</b> <b>local/shell</b> — <code>x=10</code>, <code>echo $x</code>, exists only in the current shell. <b>Environment</b> — exported, inherited by child processes. <b>No spaces around <code>=</code>.</b><br>
+Standard ones: <code>PATH</code> (search path for commands) <code>HOME</code> <code>SHELL</code> <code>USER</code>/<code>LOGNAME</code> <code>PS1</code> (primary prompt) <code>PS2</code> (continuation prompt) <code>TERM</code> <code>MAIL</code>.<br>
+<code>set</code> lists all · <code>env</code> lists environment · <code>export x</code> promotes local → environment · <code>unset x</code> removes · <code>readonly x</code>.<br>
+<b>alias:</b> a short name for a long command. <code>alias ll='ls -l'</code> · <code>unalias ll</code> · <code>alias</code> alone lists all. Put them in <code>.profile</code>/<code>.bashrc</code> to persist.<br>
+<b>Command substitution:</b> replaces a command with <i>its output</i>. Backquotes <code>`date`</code> or <code>$(date)</code>. <code>echo "Today is $(date)"</code> · <code>echo "You have $(ls | wc -l) files"</code>.</div></div>
+
+<div class="q"><div class="qt"><span class="tag bk">IF ASKED</span>Job control — job states diagram, <code>bg</code> / <code>fg</code>, signals</div>
+<div class="slot">Part B · appeared in all 3 papers, <b>but your syllabus files this under Unit II process utilities</b> — expect it one unit earlier</div>
+<div class="sk"><b>States:</b> Running (foreground) ⇄ Running (background) ⇄ Stopped/Suspended → Terminated.<br>
+<code>cmd &amp;</code> start in background · <b>Ctrl+Z</b> suspend the foreground job (sends <b>SIGTSTP</b>) · <code>bg %1</code> resume a stopped job in background · <code>fg %1</code> bring a background job to foreground · <code>jobs</code> list with job numbers · <code>kill %1</code>.<br>
+<b>Signals:</b> <b>SIGINT</b> (Ctrl+C, interrupt) · <b>SIGTSTP</b> (Ctrl+Z, suspend, catchable) · <b>SIGSTOP</b> (suspend, <b>cannot be caught or ignored</b>) · <b>SIGCONT</b> (resume) · <b>SIGKILL</b> (kill -9, cannot be caught).</div></div>
+
+<div class="pa"><span class="lab">Part A · Q5, Q6 — memorise</span><br>
+<code>|</code> connects streams (pipe) · <code>&amp;</code> pushes a process to background · <code>tee</code> copies stdin to stdout <i>and</i> a file · output can be redirected by <code>|</code>, <code>&gt;</code> <b>and</b> <code>&gt;&gt;</code> (the "all of these" option is usually correct) · Ctrl+Z suspends</div>
+</div></div>
+
+<!-- UNIT IV -->
+<div class="unit">
+<div class="ub"><span class="n">UNIT IV — Filters + grep &amp; Regular Expressions</span><span class="sec">PART B · Q7 or Q8 · 8 marks &nbsp;|&nbsp; PART A · Q7, Q8</span></div>
+<div class="ui">
+<div class="verd">★ DENSEST UNIT — it absorbed the old Unit V. Q7 ≈ filter family. Q8 ≈ tr / uniq / grep + regex. <code>sed</code> and <code>awk</code> are OUT.</div>
+
+<div class="q"><div class="qt"><span class="tag lock">LOCK · FIXED 5-MARK FORMULA</span>Describe the five categories of operators used in regular expressions</div>
+<div class="slot">Part B · <b>Q7 or Q8</b> · <b>5 marks</b> · appeared twice, 5 marks <b>both times</b>, same phrasing</div>
+<div class="sk"><b>1 · Atoms</b> — <i>what</i> to match: <code>.</code> any one character · <code>[abc]</code> character class · <code>[^abc]</code> negated class · <code>[a-z]</code> range · a literal character · <code>\</code> escapes a metacharacter.<br>
+<b>2 · Quantifiers / repetition</b> — <i>how many</i>: <code>*</code> zero or more of the preceding · <code>+</code> one or more · <code>?</code> zero or one · <code>{m,n}</code> m to n times.<br>
+<b>3 · Anchors / position</b> — <i>where</i>: <code>^</code> start of line · <code>$</code> end of line. <code>^$</code> matches an empty line.<br>
+<b>4 · Alternation &amp; grouping</b>: <code>|</code> or · <code>( )</code> group.<br>
+<b>5 · Character classes</b>: <code>[[:alpha:]] [[:digit:]] [[:upper:]] [[:lower:]] [[:space:]] [[:alnum:]]</code>.<br>
+<b>Give one example per category</b> — e.g. <code>grep "^a.*z$" file</code>.</div></div>
+
+<div class="q"><div class="qt"><span class="tag lock">LOCK</span>What is <code>grep</code>? Explain the grep operation with a flow chart &nbsp;·&nbsp; grep vs egrep vs fgrep</div>
+<div class="slot">Part B · <b>Q7 or Q8</b> · 3–5 marks · <b>Part B 3 of 3, Part A 3 of 3</b></div>
+<div class="sk"><b>grep = Global Regular Expression Print.</b> Scans input <b>line by line</b>, prints every line matching the pattern. Syntax: <code>grep [options] pattern filename(s)</code>. Quote the pattern.<br>
+<b>Flow chart:</b> Start → open file → read next line → <i>does it match the pattern?</i> → YES: print the line → NO: skip → <i>more lines left?</i> → YES: loop back → NO: stop.<br>
+<b>Options:</b> <code>-i</code> ignore case · <code>-v</code> invert, show non-matching · <code>-c</code> count of matching lines only · <code>-n</code> prefix line numbers · <code>-l</code> filenames only · <code>-w</code> whole word · <code>-x</code> whole line · <code>-e</code> multiple patterns · <code>-E</code> extended regex.<br>
+<b>grep</b> = basic regex (BRE) · <b>egrep</b> = extended regex, <code>+ ? | ( )</code> work without backslashes, = <code>grep -E</code> · <b>fgrep</b> = fixed strings only, no regex at all, fastest, = <code>grep -F</code>.</div></div>
+
+<div class="q"><div class="qt"><span class="tag lock">LOCK</span>Explain the <code>tr</code> command with its options &nbsp;·&nbsp; <code>uniq</code> with its options</div>
+<div class="slot">Part B · <b>Q8</b> · 4–5 marks · tr 2 of 3 in the Q8(a) slot, uniq 1 of 3 + <b>2 Part A MCQs</b></div>
+<div class="sk"><b><code>tr</code> — translate characters.</b> Key exam point: <b>it takes input only from standard input</b> — no filename argument, so you must redirect or pipe.<br>
+<code>tr 'a-z' 'A-Z' &lt; file</code> lowercase→uppercase · <code>tr -d '0-9' &lt; file</code> delete digits · <code>tr -s ' ' &lt; file</code> squeeze repeated characters into one · <code>tr -c</code> complement the set · <code>echo "hello" | tr 'a-z' 'A-Z'</code> → <code>HELLO</code><br>
+<b><code>uniq</code> — needs SORTED input</b> (it only compares <i>adjacent</i> lines). <code>-u</code> only non-repeated lines · <code>-d</code> only duplicated lines · <code>-c</code> prefix each line with its count · <code>-i</code> ignore case. Typical: <code>sort file | uniq -d</code>.</div></div>
+
+<div class="q"><div class="qt"><span class="tag likely">HIGH · Q7</span>The filter family — <code>cat</code>, <code>head</code>, <code>tail</code>, <code>cut</code>, <code>paste</code>, <code>sort</code>, <code>wc</code></div>
+<div class="slot">Part B · <b>Q7</b> · 3–5 marks · appears in <b>all 3 papers</b>, subset changes each time</div>
+<table>
+<tr><td><code>cat</code> — concatenate</td><td><code>-n</code> number lines, <code>-s</code> squeeze blank lines, <code>-v</code> show non-printing. <code>cat f1 f2 &gt; f3</code> joins files. <code>cat &gt; new</code> creates.</td></tr>
+<tr><td><code>head</code> — beginning</td><td><code>head -n 5 file</code> or <code>head -5 file</code> → first 5 lines (default 10)</td></tr>
+<tr><td><code>tail</code> — end</td><td><code>tail -n 5 file</code> last 5 lines · <code>tail +10</code> from line 10 on · <code>-f</code> follow a growing file</td></tr>
+<tr><td><code>cut</code> — columns</td><td><code>-c</code> by character, <code>-f</code> by field, <code>-d</code> sets delimiter (default Tab). <code>cut -d: -f1,3 /etc/passwd</code> · <code>cut -c -3</code> = columns <b>1–3</b></td></tr>
+<tr><td><code>paste</code> — join</td><td>Joins files <b>side by side</b>, line for line. <code>-d</code> sets the delimiter. <code>paste f1 f2</code></td></tr>
+<tr><td><code>sort</code></td><td><code>-n</code> numeric, <code>-r</code> reverse, <code>-k</code> field number, <code>-t</code> delimiter, <code>-u</code> unique. <b>Default delimiter = one or more spaces.</b></td></tr>
+<tr><td><code>wc</code> — count</td><td><code>-l</code> lines, <code>-w</code> words, <code>-c</code> characters. <code>wc -l file</code></td></tr>
+<tr><td>compare files</td><td><code>cmp</code> byte by byte, <b>exit status 0 if identical</b> · <code>comm</code> needs sorted files, 3 columns · <code>diff</code> shows what to change (<code>-c</code> context, <code>-u</code> unified, <code>-i</code> ignore case)</td></tr>
+</table></div>
+
+<div class="pa"><span class="lab">Part A · Q7, Q8 — memorise</span><br>
+<code>cut -c</code> characters, <code>-f</code> fields, <code>-d</code> delimiter · <code>cut -c -3</code> = columns <b>1–3</b> · <code>uniq -d</code> repeated, <code>-u</code> non-repeated, <code>-c</code> count · <code>sort</code> default delimiter = <b>one or more spaces</b> · <code>cmp</code> exit status <b>0</b> if files identical · <code>grep -i</code> ignore case, <code>-c</code> count, <code>-v</code> invert · <code>*</code> matches the <b>immediately preceding character</b></div>
+</div></div>
+
+<!-- UNIT V -->
+<div class="unit">
+<div class="ub"><span class="n">UNIT V — Shell Scripts</span><span class="sec">PART B · Q9 or Q10 · 8 marks &nbsp;|&nbsp; PART A · Q9, Q10</span></div>
+<div class="ui">
+<div class="verd" style="background:#6b3fa0">⚠ NO PAST-PAPER HISTORY — predicted from the syllabus topic order. Q9 ≈ input / arguments / conditionals. Q10 ≈ case / expr / loops / shift. This is 8 marks you cannot afford to leave blank.</div>
+
+<div class="q"><div class="qt"><span class="tag new">TOP PICK · Q9</span><code>test</code> and <code>[ ]</code> to evaluate expressions &nbsp;+&nbsp; the <code>if</code> conditional</div>
+<div class="slot">Part B · <b>Q9(a)</b> · 4–5 marks · first-named construct in the syllabus after <code>read</code></div>
+<div class="sk"><b>Spaces inside <code>[ ]</code> are mandatory.</b> <code>[ $a -gt $b ]</code> — never <code>[$a-gt$b]</code>.<br>
+<b>Numeric:</b> <code>-eq -ne -gt -ge -lt -le</code> &nbsp;·&nbsp; <b>String:</b> <code>=</code> equal, <code>!=</code> not equal, <code>-z</code> zero length, <code>-n</code> non-zero length<br>
+<b>File:</b> <code>-f</code> regular file, <code>-d</code> directory, <code>-e</code> exists, <code>-r -w -x</code> readable/writable/executable, <code>-s</code> size &gt; 0<br>
+<b>Logical:</b> <code>-a</code> AND, <code>-o</code> OR, <code>!</code> NOT</div>
+<pre>if [ $a -gt $b ]
+then
+    echo "$a is greater"
+elif [ $a -eq $b ]
+then
+    echo "equal"
+else
+    echo "$b is greater"
+fi</pre></div>
+
+<div class="q"><div class="qt"><span class="tag new">TOP PICK · Q10</span>The <code>case</code> conditional &nbsp;+&nbsp; <code>expr</code> for computation and string handling</div>
+<div class="slot">Part B · <b>Q10(a)</b> · 4–5 marks · the classic menu-driven-script question</div>
+<div class="sk"><b><code>expr</code> — spaces are mandatory; escape <code>*</code>.</b> <code>expr 5 + 3</code> → 8 · <code>expr 10 \* 2</code> → 20 · <code>expr 10 / 3</code> → 3 · <code>expr 10 % 3</code> → 1<br>
+<b>Strings:</b> <code>expr length "hello"</code> → 5 · <code>expr substr "hello" 2 3</code> → ell · <code>expr index "hello" l</code> → 3<br>
+Assign with command substitution: <code>sum=$(expr $a + $b)</code></div>
+<pre>echo "1.Add 2.Sub 3.Mul 4.Div"
+read ch
+read a b
+case $ch in
+    1) echo "Sum = `expr $a + $b`" ;;
+    2) echo "Diff = `expr $a - $b`" ;;
+    3) echo "Prod = `expr $a \* $b`" ;;
+    4) echo "Div = `expr $a / $b`" ;;
+    *) echo "Invalid choice" ;;
+esac</pre></div>
+
+<div class="q"><div class="qt"><span class="tag new">HIGH</span>Command line arguments, exit status, <code>&amp;&amp;</code> and <code>||</code></div>
+<div class="slot">Part B · <b>Q9(b)</b> · 3–4 marks · three syllabus lines, one answer</div>
+<div class="sk"><b>Positional parameters:</b> <code>$0</code> script name · <code>$1</code>…<code>$9</code> the arguments · <code>$#</code> <b>number of arguments</b> · <code>$*</code> all arguments as one string · <code>$@</code> all as separate words · <code>$?</code> <b>exit status of the last command</b> · <code>$$</code> PID of the current shell.<br>
+<b>Exit status:</b> every command returns one. <b>0 = success</b>, non-zero = failure. Read it with <code>$?</code> — <i>immediately</i>, it is overwritten by the next command. <code>exit n</code> ends a script with status n.<br>
+<b>Logical operators:</b> <code>cmd1 &amp;&amp; cmd2</code> runs cmd2 <b>only if cmd1 succeeded</b>. <code>cmd1 || cmd2</code> runs cmd2 <b>only if cmd1 failed</b>.<br>
+<code>grep "unix" file &amp;&amp; echo "Found" || echo "Not found"</code><br>
+<b><code>read</code>:</b> <code>read name</code> takes one line from the keyboard. <code>read a b c</code> splits on whitespace. <code>echo -n "Enter name: "</code> then <code>read name</code> makes it interactive.</div></div>
+
+<div class="q"><div class="qt"><span class="tag new">HIGH</span><code>while</code> / <code>for</code> looping &nbsp;·&nbsp; <code>set</code> and <code>shift</code> &nbsp;·&nbsp; <code>$0</code></div>
+<div class="slot">Part B · <b>Q10(b)</b> · 3–4 marks · last three syllabus lines of the unit</div>
+<div class="sk"><b><code>set</code></b> assigns positional parameters: <code>set 10 20 30</code> → <code>$1</code>=10, <code>$2</code>=20, <code>$3</code>=30. <code>set `date`</code> → <code>$1</code>=day, <code>$2</code>=month…<br>
+<b><code>shift</code></b> moves every parameter one place left — <code>$2</code>→<code>$1</code>, <code>$3</code>→<code>$2</code> — and <code>$#</code> drops by one. <code>shift n</code> shifts by n. Lets a script walk more than 9 arguments.<br>
+<b><code>$0</code></b> holds the name the script was <i>invoked</i> by. Link one script under several names (<code>ln script other</code>) and branch on <code>case $0 in …</code> so one file behaves differently per name.</div>
+<pre>i=1
+while [ $i -le 5 ]
+do
+    echo $i
+    i=`expr $i + 1`
+done
+
+for f in *.txt
+do
+    echo "File: $f"
+done</pre></div>
+
+<div class="q"><div class="qt"><span class="tag new">WRITE-A-SCRIPT</span>Three you should be able to reproduce cold</div>
+<div class="slot">The lab component is shell scripts — expect at least one "write a script to…"</div>
+<div class="two">
+<div><b style="font-size:7.6pt">Largest of three numbers</b>
+<pre>echo "Enter 3 numbers"
+read a b c
+if [ $a -gt $b -a $a -gt $c ]
+then
+    echo "$a is largest"
+elif [ $b -gt $c ]
+then
+    echo "$b is largest"
+else
+    echo "$c is largest"
+fi</pre></div>
+<div><b style="font-size:7.6pt">Even or odd / factorial</b>
+<pre>echo "Enter a number"
+read n
+r=`expr $n % 2`
+if [ $r -eq 0 ]
+then
+    echo "$n is even"
+else
+    echo "$n is odd"
+fi
+
+f=1 ; i=1
+while [ $i -le $n ]
+do
+    f=`expr $f \* $i`
+    i=`expr $i + 1`
+done
+echo "Factorial = $f"</pre></div></div>
+<div style="margin-top:1mm"><b style="font-size:7.6pt">Count and print all arguments — uses <code>$#</code> + <code>shift</code></b>
+<pre>echo "Number of arguments: $#"
+while [ $# -gt 0 ]
+do
+    echo "Argument: $1"
+    shift
+done</pre></div>
+<div class="sk" style="margin-top:1.2mm"><b>Marking traps:</b> start with <code>#!/bin/sh</code> · use <code>expr</code> for arithmetic, <b>not</b> <code>$(( ))</code> · use <code>[ ]</code>, <b>not</b> <code>[[ ]]</code> · close with <code>fi</code>, <code>done</code>, <code>esac</code> · <code>;;</code> ends every <code>case</code> branch · no spaces around <code>=</code> when assigning, but spaces <i>required</i> inside <code>[ ]</code> and around <code>expr</code> operators.</div></div>
+
+<div class="pa"><span class="lab">Part A · Q9, Q10 — memorise</span><br>
+<code>$?</code> = exit status of the last command, <b>0 = success</b> · <code>$#</code> = number of arguments · <code>$0</code> = script name · <code>shift</code> moves positional parameters left · <code>fi</code> closes <code>if</code>, <code>esac</code> closes <code>case</code>, <code>done</code> closes loops · <code>-eq</code> is numeric, <code>=</code> is string · <code>&amp;&amp;</code> runs on success, <code>||</code> on failure<br>
+<i>If the paper still uses the old mapping these two slots will be grep/regex instead — that's Unit IV above, so you're covered either way.</i></div>
+</div></div>
+
+<div class="ft"><b>If you have 45 minutes:</b> the four diagrams (UNIX session · standard streams · architecture · grep flow chart), then chmod absolute vs relative, then the five regex categories, then the Unit V syntax blocks. That is roughly 30 of the 40 Part-B marks in reach.<br>
+<b>Honest note:</b> Unit I–IV predictions come from three real papers. Unit V has <b>no precedent</b> — it is derived from your syllabus text, so treat it as a strong guess, not a guarantee.</div>
+
+</body></html>
