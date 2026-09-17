@@ -80,3 +80,27 @@ unit-01/ … unit-05/   lab work per unit (created as work is added)
 
 - Commits are authored as the repo owner: `JNANOTTAM GY <jnanbelliappa135@gmail.com>`.
 - Do **not** append `Co-Authored-By: Claude` or `Claude-Session:` trailers to commits in this repo.
+
+## Exam pattern (SEE, 50 marks, 2 hrs)
+
+Confirmed identical across Apr 2023, Aug 2023 and Mar 2024 papers:
+
+- **Part A** — 10 MCQs x 1 mark, no choice. Exactly **2 questions per unit, in unit order**
+  (Q1-2 Unit I, Q3-4 Unit II, Q5-6 Unit III, Q7-8 Unit IV, Q9-10 Unit V).
+- **Part B** — 5 x 8 marks, **one full question per unit from a choice of two**
+  (Unit I: Q1 or Q2 ... Unit V: Q9 or Q10). Both sub-parts come from the same question.
+- Sub-part splits: 4+4 (most common), 5+3, 3+5, rarely 6+2. A 4-5 mark part expects a
+  labelled diagram; a 2-3 mark part expects syntax + one worked example.
+
+## Syllabus drift — important
+
+The available past papers were set from an **older unit split**. Do not map PYQ units
+straight onto this syllabus:
+
+- PYQ Unit V was **grep + regular expressions + sed**. In this syllabus grep/regex sits in
+  **Unit IV**, and Unit V is **shell scripts** — which has **zero PYQ coverage**.
+- **`sed` and `awk` are out of syllabus.** They appear in the PYQs; ignore them.
+- Job control (`bg`/`fg`, job states, signals) sat in PYQ Unit III; here it belongs to
+  **Unit II** process utilities.
+
+Analysis and predictions: `exam-prep/` (HTML source + generated PDF).

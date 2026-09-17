@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>UNIX Shell Programming — SEE Prediction Sheet</title>
+<style>
+  @page { size: A4; margin: 14mm 13mm 16mm 13mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Charter","Bitstream Charter","Georgia",serif; font-size: 9.6pt; line-height: 1.45; color: #14171c; margin:0; }
+  h1,h2,h3,h4, .badge, th, .kicker, .qmeta { font-family: "Inter","Helvetica Neue",Arial,sans-serif; }
+  h1 { font-size: 21pt; margin: 0 0 2mm; letter-spacing: -0.4px; }
+  h2 { font-size: 12.5pt; margin: 7mm 0 2.5mm; padding-bottom: 1.4mm; border-bottom: 1.6pt solid #14171c; letter-spacing:-0.2px; }
+  h3 { font-size: 10.5pt; margin: 4.5mm 0 1.8mm; letter-spacing:-0.1px; }
+  p { margin: 0 0 2mm; }
+  ul,ol { margin: 0 0 2mm; padding-left: 4.6mm; }
+  li { margin-bottom: 0.9mm; }
+  code, .cmd { font-family: "SF Mono","Menlo","Consolas",monospace; font-size: 8.5pt; background:#eef1f5; padding: 0.3mm 1mm; border-radius: 2px; }
+  table { width:100%; border-collapse: collapse; margin: 2mm 0 3mm; font-size: 8.6pt; }
+  th { background:#14171c; color:#fff; text-align:left; padding: 1.5mm 2mm; font-size: 8pt; font-weight:600; letter-spacing:0.2px; }
+  td { padding: 1.5mm 2mm; border-bottom: 0.4pt solid #ccd2da; vertical-align: top; }
+  tr:nth-child(even) td { background:#f6f8fa; }
+  .cover { border: 2.2pt solid #14171c; padding: 6mm 6mm 5mm; margin-bottom: 5mm; }
+  .kicker { font-size: 7.6pt; letter-spacing: 1.6px; text-transform: uppercase; color:#5a6472; font-weight:700; margin-bottom:2mm; }
+  .sub { font-size: 9.2pt; color:#3d4550; margin-top:1.5mm; }
+  .alert { border-left: 3.6pt solid #b3261e; background:#fdf3f2; padding: 3.5mm 4mm; margin: 3mm 0; page-break-inside: avoid; }
+  .alert h3 { margin-top:0; color:#8c1d18; }
+  .note { border-left: 3.6pt solid #1f6feb; background:#f2f7fd; padding: 3mm 4mm; margin: 3mm 0; page-break-inside: avoid; }
+  .win { border-left: 3.6pt solid #17683a; background:#f1f9f4; padding: 3mm 4mm; margin: 3mm 0; page-break-inside: avoid; }
+  .q { border: 0.6pt solid #c3cad3; border-left-width: 3.6pt; padding: 3mm 3.5mm; margin-bottom: 2.6mm; page-break-inside: avoid; border-radius: 0 3px 3px 0; }
+  .t1 { border-left-color:#17683a; } .t2 { border-left-color:#1f6feb; }
+  .t3 { border-left-color:#b5730b; } .t4 { border-left-color:#6b3fa0; }
+  .qtext { font-size: 9.9pt; font-weight:600; margin-bottom: 1.8mm; }
+  .qmeta { font-size: 7.7pt; color:#4a5360; display:flex; flex-wrap:wrap; gap: 0 3.5mm; }
+  .qmeta b { color:#14171c; font-weight:600; }
+  .ev { font-size: 7.7pt; color:#5a6472; margin-top:1.5mm; padding-top:1.5mm; border-top: 0.4pt dotted #c3cad3; font-family:"Inter",Arial,sans-serif; }
+  .badge { display:inline-block; font-size:7pt; font-weight:700; letter-spacing:0.4px; padding: 0.7mm 1.8mm; border-radius: 2.5px; color:#fff; margin-right:1.5mm; vertical-align:1px; }
+  .b1{background:#17683a;} .b2{background:#1f6feb;} .b3{background:#b5730b;} .b4{background:#6b3fa0;} .b5{background:#b3261e;}
+  .pair { background:#f6f8fa; border:0.6pt solid #c3cad3; padding:2.5mm 3mm; margin-bottom:2.5mm; page-break-inside:avoid; }
+  .pair .lbl { font-family:"Inter",Arial,sans-serif; font-size:8pt; font-weight:700; color:#14171c; }
+  .verdict { font-family:"Inter",Arial,sans-serif; font-size:8.3pt; background:#14171c; color:#fff; padding:1.8mm 2.5mm; margin-top:1.5mm; border-radius:2px; }
+  .strike { color:#8c1d18; text-decoration: line-through; }
+  .pb { page-break-before: always; }
+  thead { display: table-header-group; }
+  tr { page-break-inside: avoid; }
+  h2, h3 { page-break-after: avoid; }
+  table { page-break-inside: auto; }
+  .alert, .note, .win { page-break-inside: avoid; }
+  .foot { margin-top:6mm; padding-top:2mm; border-top:0.8pt solid #14171c; font-size:7.6pt; color:#5a6472; font-family:"Inter",Arial,sans-serif; }
+  .two { display:flex; gap:4mm; } .two > div { flex:1; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">Semester End Examination · Prediction &amp; Strategy Sheet</div>
+  <h1>UNIX Shell Programming</h1>
+  <div class="sub">
+    <b>Course:</b> 24CSAEC39 / CSAEC310 &nbsp;·&nbsp; <b>Semester:</b> III &nbsp;·&nbsp; <b>Max Marks:</b> 50 &nbsp;·&nbsp; <b>Duration:</b> 2 Hrs<br>
+    <b>Built from:</b> 3 past papers — April 2023 (CSAEC310) · August 2023 backlog (CSAEC410) · March 2024 (CSAEC310)<br>
+    <b>Filtered against:</b> the current 5-unit syllabus. Every out-of-syllabus question has been stripped out.
+  </div>
+</div>
+
+<div class="alert">
+<h3>⚠ READ THIS FIRST — your syllabus is NOT the syllabus these papers were set from</h3>
+<p>All three past papers follow an <b>older unit split</b>. Comparing them line-by-line against your syllabus, two units have moved. If you revise straight from these papers you will walk in having prepared the wrong Unit V entirely.</p>
+<table><thead><tr><th style="width:30%">Your syllabus</th><th style="width:34%">Where the past papers put it</th><th>Consequence</th></tr></thead><tbody>
+<tr><td><b>Unit IV</b> — Filters <i>+ Regular Expressions using grep</i></td><td>Split across <b>PYQ Unit IV</b> (filters) <b>and PYQ Unit V</b> (grep/regex)</td><td>Two old units now compress into <b>one</b>. Unit IV is the densest unit on your paper.</td></tr>
+<tr><td><b>Unit V</b> — Shell Scripts (<code>read</code>, <code>if</code>, <code>test</code>, <code>case</code>, <code>expr</code>, <code>while</code>, <code>for</code>, <code>set</code>/<code>shift</code>)</td><td><b>Nowhere. Zero coverage in all three papers.</b></td><td><b>8 Part-B marks + ~2 Part-A marks cannot be predicted from PYQs at all.</b> Section 10 builds these from the syllabus instead.</td></tr>
+<tr><td><b>Unit II</b> — process utilities</td><td>Job control (<code>bg</code>/<code>fg</code>, job states, signals) sat in <b>PYQ Unit III</b></td><td>Expect job control to shift into your <b>Unit II</b>. Prepare it under Unit II, not III.</td></tr>
+</tbody></table>
+<p style="margin-bottom:0"><b>Bottom line:</b> the PYQs reliably predict roughly <b>40 of 50 marks</b> (Units I–IV). The remaining 10 marks are Unit V and must be studied cold. Section 11 does the arithmetic.</p>
+</div>
+
+<h2>1 · Exam pattern, decoded</h2>
+<p>Identical across all three papers — treat this as fixed.</p>
+<table><thead><tr><th style="width:15%">Section</th><th style="width:13%">Marks</th><th style="width:22%">Choice</th><th>Structure</th></tr></thead><tbody>
+<tr><td><b>PART A</b></td><td>10 × 1 = <b>10</b></td><td><b>None</b> — answer all 10</td><td>MCQ. <b>Exactly 2 questions per unit, in unit order:</b> Q1–2 = Unit I, Q3–4 = Unit II, Q5–6 = Unit III, Q7–8 = Unit IV, Q9–10 = Unit V. Confirmed in all 3 papers, no exceptions.</td></tr>
+<tr><td><b>PART B</b></td><td>5 × 8 = <b>40</b></td><td><b>Internal choice</b> — one full question from each unit</td><td>Each unit offers <b>two</b> questions. Unit I → Q1 <i>or</i> Q2. Unit II → Q3 <i>or</i> Q4. Unit III → Q5 <i>or</i> Q6. Unit IV → Q7 <i>or</i> Q8. Unit V → Q9 <i>or</i> Q10. You must take the <b>whole</b> question (both a and b) — no mixing a from one with b from the other.</td></tr>
+</tbody></table>
+
+<h3>Sub-part mark splits (every Part-B question totals 8)</h3>
+<table><thead><tr><th style="width:18%">Split</th><th style="width:22%">Frequency</th><th>What it means for you</th></tr></thead><tbody>
+<tr><td><b>4 + 4</b></td><td>13 of 30 questions</td><td>Most common. Two equally-weighted parts, usually two separate topics.</td></tr>
+<tr><td><b>5 + 3</b></td><td>11 of 30</td><td>(a) is the diagram / long theory, (b) is a short command explanation or a "write the commands" list.</td></tr>
+<tr><td><b>3 + 5</b></td><td>5 of 30</td><td>Appeared only in March 2024 — the newest paper. Rising.</td></tr>
+<tr><td><b>6 + 2</b></td><td>1 of 30</td><td>Rare outlier (Aug 2023 only).</td></tr>
+</tbody></table>
+<p><b>Rule of thumb:</b> a 4–5 mark part wants a <b>labelled diagram + explanation</b>. A 2–3 mark part wants <b>syntax + one worked example</b>. Never write a diagram-less answer for a 5-marker.</p>
+
+<h2>2 · Ruled out — do NOT study these</h2>
+<p>These appeared in the past papers but are <b>absent from your syllabus</b>. Cutting them saves you real time.</p>
+<table><thead><tr><th style="width:20%">Topic</th><th style="width:34%">Where it appeared</th><th>Why it's out</th></tr></thead><tbody>
+<tr><td class="strike"><b>sed</b> (all of it)</td><td>Aug 2023 Q10(a) 4m — sed addresses; Q10(b) 4m — insert/append/change/delete; Part A Q10 — <code>sed 's/cat/dog/g'</code></td><td>Your syllabus never mentions <code>sed</code>. Unit IV stops at "Regular Expressions using grep". <b>Skip entirely.</b></td></tr>
+<tr><td class="strike"><b>awk</b></td><td>March 2024 Q8(b) 5m — built-in variables in awk</td><td>Not in any unit. Unit IV lists filters by name and <code>awk</code> is not among them. <b>Skip entirely.</b></td></tr>
+<tr><td class="strike"><b>pr</b> command</td><td>Aug 2023 Part A Q7 — preparing a file for printing</td><td>Not in the Unit I command inventory, not named in Unit IV. Borderline — <b>1 mark of risk</b>, ignore unless you have spare time.</td></tr>
+</tbody></table>
+<div class="note" style="margin-top:2mm">
+<b>Careful with the sed/awk cut:</b> that is <b>9 marks</b> of the March 2024 + Aug 2023 papers deleted. The examiner must refill that space from your syllabus — and the only thing that expanded is <b>Unit V shell scripting</b>. This is independent evidence that Unit V will be examined properly, not token-tested.
+</div>
+
+<h2>3 · TIER 1 — Locked. Same question, same shape, expect it verbatim.</h2>
+<p>These recur across papers with near-identical wording. Memorise the answer <i>as a unit</i> — diagram included.</p>
+
+<div class="q t1">
+<div class="qtext"><span class="badge b1">TIER 1</span>Illustrate / explain the various stages of a UNIX session with a neat diagram.</div>
+<div class="qmeta"><span><b>Unit:</b> II</span><span><b>Marks:</b> 4–5</span><span><b>Section:</b> Part B, Q3(a)</span><span><b>Pairs with:</b> a process question in 3(b)</span></div>
+<div class="ev"><b>Evidence — 3 of 3 papers, always Q3(a):</b> Apr 2023 "Analyze Unix session flow with a neat diagram" (5m) · Aug 2023 "With a neat diagram, explain the different stages of UNIX session" (4m) · Mar 2024 "Illustrate the various stages of a UNIX session with a neat diagram" (4m). <b>The single most repeated question in the entire dataset.</b> Wording barely changes.</div>
+</div>
+
+<div class="q t1">
+<div class="qtext"><span class="badge b1">TIER 1</span>Explain the three standard streams / standard redirection files of UNIX.</div>
+<div class="qmeta"><span><b>Unit:</b> III</span><span><b>Marks:</b> 3–5</span><span><b>Section:</b> Part B, Q5(a)</span><span><b>Pairs with:</b> tee, or variables, in 5(b)</span></div>
+<div class="ev"><b>Evidence — 3 of 3 papers, always Q5(a):</b> Apr 2023 "Explain in detail three standard streams of UNIX" (5m) · Aug 2023 "What is Redirection? Explain any 2 redirecting techniques with a neat diagram" (5m) · Mar 2024 "Explain the three standard redirection files with respect to UNIX OS" (3m). Answer covers stdin(0)/stdout(1)/stderr(2) + <code>&gt;</code> <code>&gt;&gt;</code> <code>&lt;</code> <code>2&gt;</code>.</div>
+</div>
+
+<div class="q t1">
+<div class="qtext"><span class="badge b1">TIER 1</span>Explain the five categories of operators used in regular expressions.</div>
+<div class="qmeta"><span><b>Unit:</b> IV <i>(was PYQ Unit V)</i></span><span><b>Marks:</b> 5</span><span><b>Section:</b> Part B, Q7 or Q8</span><span><b>Pairs with:</b> grep operation / atoms</span></div>
+<div class="ev"><b>Evidence — 2 of 3 papers, 5 marks both times:</b> Aug 2023 Q9(a) "Explain 5 different categories of regular expression operators" (5m) · Mar 2024 Q10(b) "Describe the five categories of operators commonly utilized in regular expressions" (5m). The phrase <b>"five categories"</b> is the examiner's fixed formula.</div>
+</div>
+
+<div class="q t1">
+<div class="qtext"><span class="badge b1">TIER 1</span>What is grep? Explain the grep operation with a neat diagram / flow chart.</div>
+<div class="qmeta"><span><b>Unit:</b> IV <i>(was PYQ Unit V)</i></span><span><b>Marks:</b> 3–5</span><span><b>Section:</b> Part B, Q7 or Q8</span><span><b>Pairs with:</b> regex operators / atoms</span></div>
+<div class="ev"><b>Evidence — 2 of 3 papers:</b> Aug 2023 Q9(b) "What is grep? Explain grep operation with a neat diagram" (3m) · Mar 2024 Q9(a) "What is grep? Explain grep operation using a simple flow chart" (5m). Note grep also carries a Part-A MCQ in <b>all three</b> papers.</div>
+</div>
+
+<div class="q t1">
+<div class="qtext"><span class="badge b1">TIER 1</span>Explain the <code>tr</code> command with its options / the various ways of using <code>tr</code>.</div>
+<div class="qmeta"><span><b>Unit:</b> IV</span><span><b>Marks:</b> 4–5</span><span><b>Section:</b> Part B, Q8(a)</span><span><b>Pairs with:</b> <code>uniq</code> in 8(b)</span></div>
+<div class="ev"><b>Evidence — 2 of 3 papers, both as Q8(a):</b> Apr 2023 "Explain with examples the various ways of using the 'tr' command" (5m) · Aug 2023 "Explain 'tr' command with its options" (4m). Syllabus names it explicitly: "Translating Characters".</div>
+</div>
+
+<div class="q t1">
+<div class="qtext"><span class="badge b1">TIER 1</span>What are file permissions? Explain <code>chmod</code> using both the absolute (octal) and relative (symbolic) methods.</div>
+<div class="qmeta"><span><b>Unit:</b> I</span><span><b>Marks:</b> 3–4</span><span><b>Section:</b> Part B, Q2</span><span><b>Pairs with:</b> command explanations in the other half of Q2</span></div>
+<div class="ev"><b>Evidence — 2 of 3 in Part B + 3 of 3 in Part A:</b> Apr 2023 Q2(a) "Explain two methods to change permission of files" (4m) · Mar 2024 Q2(b) "chmod … absolute and relative methods" (3m). Part A: Apr 2023 Q2 (default permissions), Aug 2023 Q2 (octal 744/755), Mar 2024 Q2 (relative-mode components). Syllabus: "security by file permissions".</div>
+</div>
+
+<div class="q t1">
+<div class="qtext"><span class="badge b1">TIER 1</span>Explain the <code>du</code> command with its different options.</div>
+<div class="qmeta"><span><b>Unit:</b> II</span><span><b>Marks:</b> 3–4</span><span><b>Section:</b> Part B, Q4</span><span><b>Pairs with:</b> text-processing commands</span></div>
+<div class="ev"><b>Evidence — 2 of 3 papers:</b> Apr 2023 Q4(b) "Explain 'du' command with options" (3m) · Aug 2023 Q4(a) "Analyze the working of 'du' command with different options" (4m). Syllabus: "disk utilities". Add <code>df</code> — it is the natural companion and has not yet been asked.</div>
+</div>
+
+<div class="q t1">
+<div class="qtext"><span class="badge b1">TIER 1</span>Explain the <code>tee</code> command / demonstrate <code>tee</code> integrated into a pipeline, with a diagram.</div>
+<div class="qmeta"><span><b>Unit:</b> III</span><span><b>Marks:</b> 4–5</span><span><b>Section:</b> Part B, Q5(b) or Q6(a)</span><span><b>Pairs with:</b> redirection / alias</span></div>
+<div class="ev"><b>Evidence — 2 of 3 in Part B + 1 Part-A MCQ:</b> Aug 2023 Q6(a) "Demonstrate the working of 'tee' command with necessary diagram" (4m) · Mar 2024 Q5(b) "Explain how the tee command can be integrated into a pipeline" (5m) · Aug 2023 Part A Q5 (tee MCQ). Syllabus names "Tee Command" explicitly.</div>
+</div>
+
+<div class="q t1">
+<div class="qtext"><span class="badge b1">TIER 1</span>Name and explain any three / four UNIX commands used for text processing.</div>
+<div class="qmeta"><span><b>Unit:</b> II</span><span><b>Marks:</b> 3–4</span><span><b>Section:</b> Part B, Q4</span><span><b>Pairs with:</b> <code>du</code> or networking commands</span></div>
+<div class="ev"><b>Evidence — 2 of 3 papers:</b> Aug 2023 Q4(b) "Name and explain any four UNIX commands used for text processing" (4m) · Mar 2024 Q4(a) "List and explain any three UNIX commands used for text processing" (3m). Only the <i>count</i> changes — prepare four and you cover both.</div>
+</div>
+
+<div class="q t1">
+<div class="qtext"><span class="badge b1">TIER 1</span>Illustrate the different job states in UNIX with a neat diagram. / Explain <code>bg</code> and <code>fg</code>.</div>
+<div class="qmeta"><span><b>Unit:</b> II <i>(moved — was PYQ Unit III)</i></span><span><b>Marks:</b> 3–4</span><span><b>Section:</b> Part B</span><span><b>Pairs with:</b> process utilities / signals</span></div>
+<div class="ev"><b>Evidence — 3 of 3 papers:</b> Apr 2023 Q6(a) "Illustrate the job states in UNIX with a flow diagram" (5m) · Aug 2023 Q5(b) "Illustrate different job states with a neat diagram" (3m) · Mar 2024 Q6(a)+(b) SIGSTOP / bg-fg (4+4m). <b>Position warning:</b> your syllabus files this under <i>process utilities</i> (Unit II), not Standard Streams (Unit III). Prepare it, but expect it one unit earlier.</div>
+</div>
+
+<h2>4 · TIER 2 — Locked topic, but the values / command list WILL change</h2>
+<p>These appear every single time, but the examiner swaps the specific commands. Don't memorise one answer — <b>learn the whole command family</b> so any combination is answerable.</p>
+
+<div class="q t2">
+<div class="qtext"><span class="badge b2">TIER 2</span>Explain the following commands with syntax, options and an example: <i>(list varies)</i></div>
+<div class="qmeta"><span><b>Unit:</b> I</span><span><b>Marks:</b> 4–5</span><span><b>Section:</b> Part B, Q1(b) or Q2(a)</span><span><b>Pairs with:</b> chmod / architecture</span></div>
+<div class="ev"><b>Evidence — 3 of 3, list changes every time:</b> Apr 2023 Q1(b) asked <code>wc</code>, <code>cp</code>, <code>who</code> · Aug 2023 Q1(b) "any four basic UNIX commands" · Mar 2024 Q2(a) asked <code>echo</code>, <code>ls</code>, <code>who</code>, <code>passwd</code>, <code>date</code>.<br>
+<b>Safe prep set (covers all three + your syllabus inventory):</b> <code>echo</code> <code>printf</code> <code>ls</code> <code>who</code> <code>date</code> <code>passwd</code> <code>uname</code> <code>pwd</code> <code>cd</code> <code>mkdir</code> <code>rmdir</code> <code>cp</code> <code>mv</code> <code>rm</code> <code>cat</code> <code>more</code> <code>wc</code> <code>man</code> <code>script</code> <code>stty</code> <code>od</code> <code>lp</code> <code>tar</code> <code>gzip</code>. Learn <b>syntax + 2 options + 1 example</b> each — that is the exact format the marks are awarded in.</div>
+</div>
+
+<div class="q t2">
+<div class="qtext"><span class="badge b2">TIER 2</span>UNIX architecture / kernel–shell relationship — explain with a neat labelled diagram.</div>
+<div class="qmeta"><span><b>Unit:</b> I</span><span><b>Marks:</b> 4–5</span><span><b>Section:</b> Part B, Q1(a)</span><span><b>Pairs with:</b> features of UNIX in 1(b)</span></div>
+<div class="ev"><b>Evidence — 2 of 3, same diagram, different framing:</b> Apr 2023 "Illustrate the layered UNIX architecture with a neat diagram" (5m) · Mar 2024 "Explain with a figure, the kernel and shell relationship" (4m). <b>One concentric diagram</b> (hardware → kernel → shell → applications) answers both wordings. Aug 2023 used the Q1(a) slot for vi-editor modes instead — see Tier 3.</div>
+</div>
+
+<div class="q t2">
+<div class="qtext"><span class="badge b2">TIER 2</span>Explain the following filter commands: <code>cut</code>, <code>paste</code>, <code>head</code>, <code>tail</code> <i>(subset varies)</i></div>
+<div class="qmeta"><span><b>Unit:</b> IV</span><span><b>Marks:</b> 3–4</span><span><b>Section:</b> Part B, Q7</span><span><b>Pairs with:</b> <code>wc</code> or a "write the commands" list</span></div>
+<div class="ev"><b>Evidence — 3 of 3, subset changes:</b> Apr 2023 Q8(b) tail/head/paste (3m) · Aug 2023 Q7(b) head -2, tail -2, middle-of-file (3m) · Mar 2024 Q7(a) cut/paste/head/tail (4m). Syllabus wording — "Display Beginning and End of Files, Cut and Paste" — guarantees this cluster.</div>
+</div>
+
+<div class="q t2">
+<div class="qtext"><span class="badge b2">TIER 2</span>Process utilities — types of processes, initialization &amp; termination, <code>ps</code>, and priority with <code>nice</code> / <code>renice</code>.</div>
+<div class="qmeta"><span><b>Unit:</b> II</span><span><b>Marks:</b> 4–5</span><span><b>Section:</b> Part B, Q3(b) or Q4(a)</span><span><b>Pairs with:</b> the UNIX session diagram in 3(a)</span></div>
+<div class="ev"><b>Evidence — 3 of 3, angle changes:</b> Apr 2023 Q4(a) "Explain process utilities in detail" (5m) · Aug 2023 Q3(b) "types of process … initialization and termination" (4m) · Mar 2024 Q3(b) "process priorities … nice and renice" (4m). Cover all three angles — they rotate.</div>
+</div>
+
+<div class="q t2">
+<div class="qtext"><span class="badge b2">TIER 2</span>Explain <code>grep</code> with its options / how grep searches file contents / grep vs egrep vs fgrep.</div>
+<div class="qmeta"><span><b>Unit:</b> IV</span><span><b>Marks:</b> 3–4</span><span><b>Section:</b> Part B, Q7 or Q8</span><span><b>Pairs with:</b> regex operators, grep flow chart</span></div>
+<div class="ev"><b>Evidence — 3 of 3 in Part B + 3 of 3 in Part A:</b> Apr 2023 Q10(a) "grep command with options" (4m) &amp; Q10(b) "how grep can be used to search file contents" (4m) · Mar 2024 Q10(a) "Differentiate between grep, egrep, fgrep" (3m). Options to know cold: <code>-i -v -c -n -l -e -E -f -x</code>.</div>
+</div>
+
+<div class="q t2">
+<div class="qtext"><span class="badge b2">TIER 2</span>Write the UNIX commands to perform the following operations: <i>(3–4 practical tasks, always different)</i></div>
+<div class="qmeta"><span><b>Unit:</b> I, II or IV</span><span><b>Marks:</b> 3–4</span><span><b>Section:</b> Part B, the (b) part</span><span><b>Pairs with:</b> whatever theory sits in the (a) part</span></div>
+<div class="ev"><b>Evidence — 2 of 3 papers, four separate instances:</b> Apr 2023 Q1(b) wc/cp/who · Q3(b) sort -u, uniq -d, cmp · Q7(b) head -5, cut -f1,3, paste, wc -l · Aug 2023 Q7(b) head -2, tail -2, middle lines. <b>Tasks never repeat</b> — but they are always one-liners drawn from the syllabus command list. Practice writing, not reciting.</div>
+</div>
+
+<h2>5 · TIER 3 — High probability, single-paper precedent or syllabus-mandated</h2>
+
+<div class="q t3">
+<div class="qtext"><span class="badge b3">TIER 3</span>Illustrate the working of the <code>vi</code> editor with its different modes.</div>
+<div class="qmeta"><span><b>Unit:</b> I</span><span><b>Marks:</b> 4</span><span><b>Section:</b> Part B, Q1(a)</span><span><b>Pairs with:</b> basic commands in 1(b)</span></div>
+<div class="ev">Aug 2023 Q1(a), 4m. <b>Named explicitly in your syllabus</b> ("vi editor") yet asked only once in three papers — and not at all in the most recent. Three modes: Command / Insert / ex (Escape). <b>Overdue and cheap. Do it.</b></div>
+</div>
+
+<div class="q t3">
+<div class="qtext"><span class="badge b3">TIER 3</span>List and explain the salient features of the UNIX operating system.</div>
+<div class="qmeta"><span><b>Unit:</b> I</span><span><b>Marks:</b> 4</span><span><b>Section:</b> Part B, Q1(b)</span><span><b>Pairs with:</b> the architecture diagram in 1(a)</span></div>
+<div class="ev">Mar 2024 Q1(b), 4m — the most recent paper. Syllabus: "Features of UNIX". Multi-user, multitasking, portability, hierarchical file system, security, shell, pipes/filters, communication. <b>Pairs directly with the Tier-2 architecture diagram — learn them as one answer.</b></div>
+</div>
+
+<div class="q t3">
+<div class="qtext"><span class="badge b3">TIER 3</span>Explain the <code>uniq</code> command with its different options.</div>
+<div class="qmeta"><span><b>Unit:</b> IV</span><span><b>Marks:</b> 4</span><span><b>Section:</b> Part B, Q8(b)</span><span><b>Pairs with:</b> <code>tr</code> in 8(a)</span></div>
+<div class="ev">Aug 2023 Q8(b), 4m — plus <b>two separate Part-A MCQs</b> (Mar 2024 Q3 <code>-d</code>, Aug 2023 Q8 <code>-u</code>). Syllabus: "Files with Duplicate Lines". Options: <code>-u -d -c -i</code>. Remember it needs <b>sorted input</b>.</div>
+</div>
+
+<div class="q t3">
+<div class="qtext"><span class="badge b3">TIER 3</span>What is an alias? Explain creating and removing aliases with examples.</div>
+<div class="qmeta"><span><b>Unit:</b> III</span><span><b>Marks:</b> 3–4</span><span><b>Section:</b> Part B, Q6(b)</span><span><b>Pairs with:</b> tee / command substitution / variables</span></div>
+<div class="ev">Aug 2023 Q6(b), 4m. Syllabus names "Aliases" explicitly. <code>alias</code>, <code>unalias</code>, and the lab component is literally "customization of Linux shell environment" — which <i>is</i> aliases + env variables.</div>
+</div>
+
+<div class="q t3">
+<div class="qtext"><span class="badge b3">TIER 3</span>Explain the types of variables in UNIX with examples. / Explain environment variables.</div>
+<div class="qmeta"><span><b>Unit:</b> III</span><span><b>Marks:</b> 3–4</span><span><b>Section:</b> Part B, Q5(b) or Q6(b)</span><span><b>Pairs with:</b> streams / redirection</span></div>
+<div class="ev">Apr 2023 Q5(b), 3m. Syllabus lists <b>both</b> "Variables" and "Environment Variables" as separate items — two syllabus entries, one question. Local vs environment vs shell; <code>PATH HOME SHELL PS1 PS2 LOGNAME</code>; <code>set</code>, <code>export</code>, <code>env</code>.</div>
+</div>
+
+<div class="q t3">
+<div class="qtext"><span class="badge b3">TIER 3</span>Explain the need for command substitution with an example.</div>
+<div class="qmeta"><span><b>Unit:</b> III</span><span><b>Marks:</b> 3</span><span><b>Section:</b> Part B, Q6(b)</span><span><b>Pairs with:</b> job control / alias</span></div>
+<div class="ev">Apr 2023 Q6(b), 3m. Syllabus: "Command Substitution". Backticks vs <code>$( )</code>, with <code>echo "Today is $(date)"</code>. <b>Small topic, ~10 minutes to learn, 3 guaranteed-shaped marks.</b></div>
+</div>
+
+<div class="q t3">
+<div class="qtext"><span class="badge b3">TIER 3</span>Explain the commands used to compare two files (<code>cmp</code>, <code>comm</code>, <code>diff</code>).</div>
+<div class="qmeta"><span><b>Unit:</b> II / IV</span><span><b>Marks:</b> 3–4</span><span><b>Section:</b> Part B, Q7(a) or Q8(a)</span><span><b>Pairs with:</b> filter commands</span></div>
+<div class="ev">Apr 2023 Q7(a) "any two commands to compare two files" (4m) · Mar 2024 Q8(a) "diff with -c, -u, -i" (3m) · Part A: Aug 2023 Q4, Mar 2024 Q8 (cmp exit status = <b>0</b> when identical). <b>2 of 3 in Part B, 2 of 3 in Part A.</b> Falls under "UNIX utilities" in Unit II.</div>
+</div>
+
+<div class="q t3">
+<div class="qtext"><span class="badge b3">TIER 3</span>Explain the command used to concatenate files (<code>cat</code>) with its options.</div>
+<div class="qmeta"><span><b>Unit:</b> IV</span><span><b>Marks:</b> 4–5</span><span><b>Section:</b> Part B, Q7(a)</span><span><b>Pairs with:</b> head/tail practical commands</span></div>
+<div class="ev">Aug 2023 Q7(a), 5m. Syllabus names it as its own line item: <b>"Concatenating Files"</b>. <code>cat -n -v -s -e</code>, plus creating and appending files with <code>&gt;</code> and <code>&gt;&gt;</code>.</div>
+</div>
+
+<div class="q t3">
+<div class="qtext"><span class="badge b3">TIER 3</span>Briefly explain the networking commands: <code>ping</code>, <code>host</code>, <code>tracepath</code>, <code>netstat</code>, <code>route</code>.</div>
+<div class="qmeta"><span><b>Unit:</b> II</span><span><b>Marks:</b> 5</span><span><b>Section:</b> Part B, Q4(b)</span><span><b>Pairs with:</b> text-processing commands in 4(a)</span></div>
+<div class="ev">Mar 2024 Q4(b), 5m — most recent paper. Part A: Apr 2023 Q4 (ping), Mar 2024 Q4 (route). Syllabus: "networking commands". Also know <code>ftp</code>, <code>telnet</code>, <code>ssh</code>, <code>ifconfig</code>, <code>finger</code>.</div>
+</div>
+
+<div class="q t3">
+<div class="qtext"><span class="badge b3">TIER 3</span>Explain the different wildcards / shell metacharacters used in UNIX with examples.</div>
+<div class="qmeta"><span><b>Unit:</b> I or III</span><span><b>Marks:</b> 4</span><span><b>Section:</b> Part B, Q2(b)</span><span><b>Pairs with:</b> file permissions in 2(a)</span></div>
+<div class="ev">Apr 2023 Q2(b), 4m. Sits under "file handling utilities" (Unit I) or "Quotes / Command Execution" (Unit III). <code>* ? [ ] [!] </code> plus escaping and quoting — <b>and quoting is a named syllabus item that has never been asked. See Section 6.</b></div>
+</div>
+
+<h2>6 · OVERDUE — in your syllabus, never yet asked in Part B</h2>
+<p>Every one of these is named in your syllabus but has <b>zero Part-B appearances</b> across three papers. Examiners rotate; these are statistically the next to surface. Each is small — this section is cheap insurance.</p>
+<table><thead><tr><th style="width:24%">Topic</th><th style="width:10%">Unit</th><th style="width:22%">Syllabus wording</th><th>What to prepare</th></tr></thead><tbody>
+<tr><td><b>Sorting — <code>sort</code></b></td><td>IV</td><td>"Sorting."</td><td>A whole named syllabus line, and <b>only ever a Part-A MCQ</b> (Apr 2023 Q8, delimiter). Options <code>-n -r -k -t -u -m</code>. <b>Highest-value item in this table.</b></td></tr>
+<tr><td><b>Quoting &amp; escaping</b></td><td>III</td><td>"Quotes"</td><td>Single vs double vs backslash; what each protects. Never asked in Part B. Pairs naturally with wildcards.</td></tr>
+<tr><td><b>Backup utilities — <code>tar</code>, <code>gzip</code></b></td><td>I &amp; II</td><td>"tar, gzip" + "backup utilities"</td><td>Listed in <b>two</b> units, only ever one Part-A MCQ (Aug 2023 Q3, <code>-c</code>). <code>tar -cvf/-xvf/-tvf</code>, <code>gzip</code>/<code>gunzip</code>/<code>zcat</code>.</td></tr>
+<tr><td><b>Command execution modes</b></td><td>III</td><td>"Command Execution"</td><td>Sequential <code>;</code>, background <code>&amp;</code>, grouping <code>( )</code>, <code>&amp;&amp;</code> / <code>||</code>. Overlaps Unit V — <b>double-dip.</b></td></tr>
+<tr><td><b><code>script</code>, <code>stty</code>, <code>od</code>, <code>PATH</code>, <code>man</code></b></td><td>I</td><td>Named in the Unit I command list</td><td>Never asked. Likely as one item inside a "explain the following commands" list — see Tier 2.</td></tr>
+<tr><td><b>UNIX file system structure</b></td><td>I</td><td>"Introduction to UNIX file system"</td><td>The <code>/</code> hierarchy tree (<code>/bin /etc /dev /usr /tmp /home</code>), file types, inodes, absolute vs relative paths. A named syllabus heading with no Part-B precedent — <b>and it is a diagram question, which is exactly what 4–5 markers want.</b></td></tr>
+</tbody></table>
+
+<h2>7 · PART A — the ten 1-mark MCQs</h2>
+<p>Two per unit, in order, no choice. Ranked by how often the topic has carried a Part-A slot.</p>
+<table><thead><tr><th style="width:9%">Slot</th><th style="width:8%">Unit</th><th style="width:26%">Predicted topic</th><th style="width:11%">Hit rate</th><th>The fact to memorise</th></tr></thead><tbody>
+<tr><td><b>Q1</b></td><td>I</td><td>What the shell is / shell's role</td><td>2 of 3</td><td>Shell is both a <b>scripting language and an interpreter</b>; it is the interface between user and kernel.</td></tr>
+<tr><td><b>Q2</b></td><td>I</td><td><b>chmod / permissions</b></td><td><b>3 of 3</b></td><td>Default file perms <code>rw-rw-rw-</code> (666 before umask); <code>755</code>=rwxr-xr-x; <code>744</code>=rwxr--r--; relative mode has <b>3 components</b> (who + operator + permission).</td></tr>
+<tr><td><b>Q3</b></td><td>II</td><td>Process / <code>ps</code> / <code>tar</code></td><td>2 of 3</td><td><code>ps</code> shows process attributes; <code>tar -c</code> creates an archive, <code>-x</code> extracts, <code>-t</code> lists.</td></tr>
+<tr><td><b>Q4</b></td><td>II</td><td><b>Networking or file-comparison command</b></td><td><b>3 of 3</b></td><td><code>ping</code> tests reachability; <code>route</code> manipulates the TCP/IP routing table; <code>diff</code>/<code>cmp</code>/<code>comm</code> compare files.</td></tr>
+<tr><td><b>Q5</b></td><td>III</td><td><b>Pipe / redirection / tee symbol</b></td><td><b>3 of 3</b></td><td><code>|</code> connects streams; <code>&amp;</code> pushes to background; <code>tee</code> copies stdin to stdout <i>and</i> a file.</td></tr>
+<tr><td><b>Q6</b></td><td>III</td><td><b>Redirection operators or job control</b></td><td><b>3 of 3</b></td><td>Output redirection = <code>|</code>, <code>&gt;</code> <i>and</i> <code>&gt;&gt;</code> (the "all of these" option is usually right); <code>Ctrl+Z</code> suspends a foreground job.</td></tr>
+<tr><td><b>Q7</b></td><td>IV</td><td><b><code>cut</code> options</b></td><td>2 of 3</td><td><code>-c</code> = characters, <code>-f</code> = fields, <code>-d</code> = delimiter. <code>cut -c -3</code> means columns <b>1–3</b>.</td></tr>
+<tr><td><b>Q8</b></td><td>IV</td><td><b><code>uniq</code> options / <code>sort</code> / exit status</b></td><td><b>3 of 3</b></td><td><code>uniq -d</code> = repeated lines only, <code>-u</code> = non-repeated only, <code>-c</code> = count. <code>sort</code> default delimiter = <b>one or more spaces</b>. <code>cmp</code> exit status = <b>0</b> if identical.</td></tr>
+<tr><td><b>Q9</b></td><td>V*</td><td>Shell scripting basics <i>(new)</i></td><td>—</td><td><span style="color:#8c1d18"><b>No PYQ precedent.</b></span> Expect: <code>$?</code> = exit status of last command; <b>0 = success</b>; <code>$#</code> = number of arguments; <code>$0</code> = script name.</td></tr>
+<tr><td><b>Q10</b></td><td>V*</td><td>Shell scripting constructs <i>(new)</i></td><td>—</td><td><span style="color:#8c1d18"><b>No PYQ precedent.</b></span> Expect: <code>shift</code> moves positional parameters left; <code>esac</code> closes <code>case</code>; <code>fi</code> closes <code>if</code>; <code>-eq</code> is numeric, <code>=</code> is string.</td></tr>
+</tbody></table>
+<p style="font-size:8.4pt"><b>* Q9/Q10 warning:</b> in the old papers these two slots were <b>grep and regular expressions</b> (3 of 3 papers). Under your syllabus grep moved to Unit IV, so Q9/Q10 should become shell scripting. <b>Prepare both</b> — if the paper still uses the old mapping you get grep MCQs, and grep is Tier 1 anyway. Either way you are covered.</p>
+
+<h2>8 · Which questions appear TOGETHER — your choice map</h2>
+<p>This is the section that wins marks. Each unit gives you <b>two</b> questions and you take one <b>whole</b>. Below is what historically bundles with what, so you can decide <i>before</i> the exam which option you are taking.</p>
+
+<div class="pair">
+<div class="lbl">UNIT I — take Q1 or Q2</div>
+<table style="margin-bottom:1mm"><thead><tr><th style="width:50%">Q1 — the "diagram + theory" question</th><th>Q2 — the "commands + permissions" question</th></tr></thead><tbody>
+<tr><td>(a) Layered UNIX architecture diagram <i>[Apr 23, 5m]</i><br>(a) vi editor modes <i>[Aug 23, 4m]</i><br>(a) Kernel–shell relationship figure <i>[Mar 24, 4m]</i><br><br>(b) Commands: wc, cp, who <i>[Apr 23, 3m]</i><br>(b) Any four basic commands <i>[Aug 23, 4m]</i><br>(b) Salient features of UNIX <i>[Mar 24, 4m]</i></td>
+<td>(a) Two methods to change permissions <i>[Apr 23, 4m]</i><br>(a) cp command with options <i>[Aug 23, 6m]</i><br>(a) Explain echo/ls/who/passwd/date <i>[Mar 24, 5m]</i><br><br>(b) Wildcards <i>[Apr 23, 4m]</i><br>(b) Rename a file <i>[Aug 23, 2m]</i><br>(b) chmod absolute + relative <i>[Mar 24, 3m]</i></td></tr>
+</tbody></table>
+<div class="verdict"><b>VERDICT:</b> Q1 always = a structural diagram + descriptive theory. Q2 always = command explanations + file permissions. <b>Prepare the architecture diagram + features (Q1) AND chmod + the command list (Q2)</b> — that is four small topics and it makes Unit I choice-proof.</div>
+</div>
+
+<div class="pair">
+<div class="lbl">UNIT II — take Q3 or Q4</div>
+<table style="margin-bottom:1mm"><thead><tr><th style="width:50%">Q3 — "UNIX session + processes"</th><th>Q4 — "disk + text + network utilities"</th></tr></thead><tbody>
+<tr><td>(a) <b>UNIX session stages, neat diagram — ALL 3 PAPERS</b> <i>[5m, 4m, 4m]</i><br><br>(b) Commands: sort -u, uniq -d, cmp <i>[Apr 23, 3m]</i><br>(b) Types of process, init &amp; termination <i>[Aug 23, 4m]</i><br>(b) Process priorities, nice &amp; renice <i>[Mar 24, 4m]</i></td>
+<td>(a) Process utilities in detail <i>[Apr 23, 5m]</i><br>(a) du command with options <i>[Aug 23, 4m]</i><br>(a) Three text-processing commands <i>[Mar 24, 3m]</i><br><br>(b) du command with options <i>[Apr 23, 3m]</i><br>(b) Four text-processing commands <i>[Aug 23, 4m]</i><br>(b) Networking commands <i>[Mar 24, 5m]</i></td></tr>
+</tbody></table>
+<div class="verdict"><b>VERDICT — ANSWER Q3.</b> The UNIX session diagram is <b>3 for 3 in the Q3(a) slot</b> — the most reliable 4–5 marks on the entire paper. It always pairs with a <b>process</b> question in 3(b). So: learn the session diagram + process types + nice/renice, and Unit II is 8/8 without touching du or networking.</div>
+</div>
+
+<div class="pair">
+<div class="lbl">UNIT III — take Q5 or Q6</div>
+<table style="margin-bottom:1mm"><thead><tr><th style="width:50%">Q5 — "streams &amp; redirection"</th><th>Q6 — "job control + shell features"</th></tr></thead><tbody>
+<tr><td>(a) <b>Three standard streams / redirection — ALL 3 PAPERS</b> <i>[5m, 5m, 3m]</i><br><br>(b) Types of variables in UNIX <i>[Apr 23, 3m]</i><br>(b) Job states diagram <i>[Aug 23, 3m]</i><br>(b) tee in a pipeline <i>[Mar 24, 5m]</i></td>
+<td>(a) Job states flow diagram <i>[Apr 23, 5m]</i><br>(a) tee command with diagram <i>[Aug 23, 4m]</i><br>(a) SIGSTOP / job control signals <i>[Mar 24, 4m]</i><br><br>(b) Command substitution <i>[Apr 23, 3m]</i><br>(b) Alias — create and remove <i>[Aug 23, 4m]</i><br>(b) bg and fg commands <i>[Mar 24, 4m]</i></td></tr>
+</tbody></table>
+<div class="verdict"><b>VERDICT — ANSWER Q5.</b> Standard streams/redirection is <b>3 for 3 in the Q5(a) slot</b>. The (b) partner rotates between <b>variables / job states / tee</b> — all three are Tier 1 or Tier 3 here, so prepare all three (they are 15 minutes each) and Q5 is locked at 8/8. <b>Note:</b> under your syllabus, job control likely migrates to Unit II — so Q5(b) will most likely be <b>tee or variables</b>.</div>
+</div>
+
+<div class="pair">
+<div class="lbl">UNIT IV — take Q7 or Q8 &nbsp;<span style="color:#8c1d18;font-weight:600">⚠ restructured unit</span></div>
+<p style="font-size:8.4pt;margin:1mm 0 2mm">Your Unit IV absorbs <b>both</b> old PYQ Unit IV (filters) <b>and</b> the grep/regex half of old PYQ Unit V. Two scenarios — prepare for both, they overlap heavily.</p>
+<table style="margin-bottom:1mm"><thead><tr><th style="width:50%">Q7 — most likely "filters"</th><th>Q8 — most likely "tr / uniq / grep + regex"</th></tr></thead><tbody>
+<tr><td>(a) Two commands to compare files <i>[Apr 23, 4m]</i><br>(a) cat / concatenating files <i>[Aug 23, 5m]</i><br>(a) cut, paste, head, tail <i>[Mar 24, 4m]</i><br><br>(b) Write commands: head -5, cut -f1,3, paste, wc -l <i>[Apr 23, 4m]</i><br>(b) Write commands: head -2, tail -2, middle <i>[Aug 23, 3m]</i><br>(b) wc — lines, words, characters <i>[Mar 24, 4m]</i></td>
+<td>(a) tr — various ways of using <i>[Apr 23, 5m]</i><br>(a) tr with options <i>[Aug 23, 4m]</i><br>(a) <span class="strike">diff -c -u -i</span> <i>[Mar 24, 3m]</i><br><br>(b) tail, head, paste <i>[Apr 23, 3m]</i><br>(b) uniq with options <i>[Aug 23, 4m]</i><br>(b) <span class="strike">awk built-in variables — OUT OF SYLLABUS</span><br><br><b>+ absorbed from old Unit V:</b> five categories of regex operators <i>[5m]</i> · grep operation flow chart <i>[5m]</i> · grep vs egrep vs fgrep <i>[3m]</i> · atoms and operators <i>[5m]</i></td></tr>
+</tbody></table>
+<div class="verdict"><b>VERDICT:</b> Q7 = the <b>filter family</b> (cat, head, tail, cut, paste, wc, sort). Q8 = <b>tr, uniq, and the grep/regex block</b>. Because awk and sed are cut, Q8 has a <b>5-mark hole</b> that grep/regex will almost certainly fill. <b>Prepare the filter family for Q7 and tr + uniq + "five categories of regex operators" for Q8</b> — that covers both branches.</div>
+</div>
+
+<div class="pair">
+<div class="lbl">UNIT V — take Q9 or Q10 &nbsp;<span style="color:#8c1d18;font-weight:600">⚠ zero PYQ precedent — see Section 9</span></div>
+<div class="verdict" style="background:#b3261e"><b>VERDICT:</b> No past paper can help you here. The old Q9/Q10 slots held grep and regular expressions, which have moved to your Unit IV. Section 9 predicts this unit from the syllabus text itself.</div>
+</div>
+
+<h2>9 · UNIT V — Shell Scripts. The blind spot.</h2>
+<div class="alert">
+<p style="margin-bottom:0"><b>This unit is worth 8 Part-B marks + roughly 2 Part-A marks = 10 marks, or 20% of the paper — and not one of your three past papers contains a single shell-scripting question.</b> Every prediction below is derived from the syllabus topic list and the paper's own 8-mark two-part structure, not from precedent. Treat this section as the difference between scraping 62 and comfortably clearing 80.</p>
+</div>
+
+<p>Your syllabus lists Unit V topics in this exact order — the examiner will almost certainly walk the same order when splitting two questions:</p>
+<p style="background:#f6f8fa;border:0.6pt solid #c3cad3;padding:2.5mm 3mm;font-size:8.7pt"><code>read</code> → command line arguments → <code>exit</code> &amp; exit status → <code>&amp;&amp;</code> <code>||</code> → conditional execution → <code>if</code> → <code>test</code> and <code>[ ]</code> → <code>case</code> → <code>expr</code> → <code>$0</code> → <code>while</code> → <code>for</code> → <code>set</code> and <code>shift</code></p>
+<p><b>That is 13 topics across 2 questions × 2 parts = 4 slots.</b> The natural split falls at the <code>case</code>/<code>expr</code> boundary:</p>
+
+<div class="q t4">
+<div class="qtext"><span class="badge b4">PREDICTED</span>Q9 — the "input, arguments and conditionals" question</div>
+<div class="qmeta"><span><b>Unit:</b> V</span><span><b>Marks:</b> 8 (as 4+4 or 5+3)</span></div>
+<div class="ev" style="border-top:none;padding-top:0.5mm">
+<b>(a) Most likely [4–5m] — one of:</b><br>
+• Explain <code>test</code> and <code>[ ]</code> for evaluating expressions. Give the file / string / numeric operator tables.<br>
+• Explain the <code>if</code> conditional with its forms (<code>if-fi</code>, <code>if-else-fi</code>, <code>if-elif-else-fi</code>) with a shell script example.<br>
+• Explain how to make a script interactive using <code>read</code>, with an example.<br><br>
+<b>(b) Most likely [3–4m] — one of:</b><br>
+• Explain command line arguments / positional parameters: <code>$0 $1…$9 $# $* $@ $?</code><br>
+• Explain <code>exit</code> and the exit status of a command. Why is <b>0 = success</b>?<br>
+• Explain the logical operators <code>&amp;&amp;</code> and <code>||</code> with examples.
+</div>
+</div>
+
+<div class="q t4">
+<div class="qtext"><span class="badge b4">PREDICTED</span>Q10 — the "case, computation and loops" question</div>
+<div class="qmeta"><span><b>Unit:</b> V</span><span><b>Marks:</b> 8 (as 4+4 or 3+5)</span></div>
+<div class="ev" style="border-top:none;padding-top:0.5mm">
+<b>(a) Most likely [4–5m] — one of:</b><br>
+• Explain the <code>case</code> conditional with syntax and a menu-driven shell script example.<br>
+• Explain <code>while</code> looping and <code>for</code> looping with a list, with one example each.<br>
+• Explain <code>expr</code> for computation and string handling (<code>expr length</code>, <code>expr substr</code>, <code>expr index</code>).<br><br>
+<b>(b) Most likely [3–4m] — one of:</b><br>
+• Explain <code>set</code> and <code>shift</code> for manipulating positional parameters, with an example.<br>
+• Explain <code>$0</code> — calling a script by different names — and why it is useful.<br>
+• <b>Write a shell script to…</b> (see the drill list below).
+</div>
+</div>
+
+<h3>The "write a shell script to…" drill list</h3>
+<p>The lab component is "Linux commands execution related to shell scripts", so at least one part will ask you to <b>write</b> a script. These are the standard first-course programs — each maps to a named syllabus construct. Write out all ten by hand once.</p>
+<table><thead><tr><th style="width:52%">Program</th><th>Construct it tests</th></tr></thead><tbody>
+<tr><td>Read two numbers and print the larger</td><td><code>read</code> + <code>if</code> + <code>test</code></td></tr>
+<tr><td>Check whether a number is even or odd</td><td><code>expr</code> modulo + <code>if</code></td></tr>
+<tr><td>Find the largest of three numbers</td><td>nested <code>if-elif-else</code></td></tr>
+<tr><td>Menu-driven calculator (+ − × ÷)</td><td><code>case</code> + <code>expr</code> + <code>while</code></td></tr>
+<tr><td>Factorial of a number</td><td><code>while</code> + <code>expr</code></td></tr>
+<tr><td>Sum of digits / reverse a number</td><td><code>while</code> + <code>expr</code></td></tr>
+<tr><td>Print the first N Fibonacci numbers</td><td><code>for</code> or <code>while</code> + <code>expr</code></td></tr>
+<tr><td>Count the arguments passed and print each one</td><td><code>$#</code> + <code>shift</code> + <code>while</code></td></tr>
+<tr><td>Check if a file exists, and report its permissions</td><td><code>test -f -r -w -x</code> + <code>if</code></td></tr>
+<tr><td>Print all files in a directory using a list</td><td><code>for</code> looping with a list</td></tr>
+</tbody></table>
+<div class="note">
+<b>Write them in the syllabus dialect, or you lose marks.</b> Use <code>expr</code> for arithmetic — <b>not</b> <code>$(( ))</code>. Use <code>test</code> or <code>[ ]</code> — <b>not</b> <code>[[ ]]</code>. Your syllabus names <code>expr</code> and <code>test</code> explicitly and never introduces the alternatives, so the bash shortcuts read as out-of-syllabus to an examiner marking against a scheme.
+</div>
+
+<h2>10 · The scoring plan — what to study for what mark</h2>
+<p>Marks available, by what you actually revise. Read this as a ladder; each rung adds to the one above.</p>
+<table><thead><tr><th style="width:8%">Rung</th><th style="width:34%">What you study</th><th style="width:13%">Time</th><th style="width:13%">Marks secured</th><th>Running total</th></tr></thead><tbody>
+<tr><td><b>1</b></td><td><b>Tier 1 only</b> (Section 3) — 10 questions, all with diagrams</td><td>~3 hrs</td><td>~20</td><td><b>20 / 50</b> — fail</td></tr>
+<tr><td><b>2</b></td><td>+ <b>Tier 2</b> (Section 4) — the command families</td><td>+3 hrs</td><td>+10</td><td><b>30 / 50 — 60%</b></td></tr>
+<tr><td><b>3</b></td><td>+ <b>Part A facts</b> (Section 7)</td><td>+1 hr</td><td>+7</td><td><b>37 / 50 — 74%</b></td></tr>
+<tr><td><b>4</b></td><td>+ <b>Unit V shell scripting</b> (Section 9)</td><td>+3 hrs</td><td>+8</td><td><b>45 / 50 — 90%</b></td></tr>
+<tr><td><b>5</b></td><td>+ <b>Tier 3 &amp; Overdue</b> (Sections 5–6)</td><td>+2 hrs</td><td>+3</td><td><b>48 / 50</b> — safety margin</td></tr>
+</tbody></table>
+
+<div class="win">
+<h3 style="margin-top:0">Your 60–70 target, answered precisely</h3>
+<p><b>Rungs 1–2 alone put you at 60%</b> (30/50) on roughly six hours of work, entirely from repeated questions. <b>Rung 3 takes you to 74%.</b> That clears your target with margin, and none of it requires Unit V.</p>
+<p style="margin-bottom:0"><b>But do not stop there.</b> Unit V is 8 Part-B marks you would be <i>guaranteed</i> to drop, and it is the one unit where the paper has no fallback — if you skip it, your realistic ceiling is 42/50 and your realistic floor, if a Tier-2 command list surprises you, is around 31. Three hours on Section 9 converts your worst case from "just passed" into "comfortably safe". <b>That is the single highest-return decision on this sheet.</b></p>
+</div>
+
+<h3>Sequence to revise in</h3>
+<ol>
+<li><b>The four 3-of-3 diagrams first</b> — UNIX session stages (Unit II), standard streams/redirection (Unit III), UNIX architecture (Unit I), grep operation flow chart (Unit IV). Four diagrams, ~18 marks of exposure, and diagram marks are the easiest to earn cleanly.</li>
+<li><b>chmod, absolute and relative.</b> 3 of 3 in Part A, 2 of 3 in Part B. Nothing else on this paper has that density.</li>
+<li><b>The Unit I command list</b> with syntax + 2 options + 1 example each. This is the Tier-2 question that appears every year with a different list.</li>
+<li><b>tr, uniq, cut, paste, head, tail, cat, sort, wc</b> — the filter family. Unit IV is now the densest unit on your paper.</li>
+<li><b>Unit V shell scripts</b> — the 13 constructs, then hand-write the ten drill programs.</li>
+<li><b>Five categories of regex operators</b> — a fixed 5-mark formula, verbatim, twice.</li>
+<li><b>Mop up:</b> variables/environment variables, alias, command substitution, tee, du, process utilities, networking commands.</li>
+</ol>
+
+<div class="foot">
+<b>Method.</b> Built by extracting and tabulating all 30 Part-B sub-questions and 30 Part-A MCQs across three papers, mapping each to your current syllabus, discarding out-of-syllabus items, then scoring by slot frequency and position. <b>Evidence keys:</b> Apr 2023 = CSAEC310, Sem III · Aug 2023 = CSAEC410, Sem IV backlog · Mar 2024 = CSAEC310, Sem III.<br>
+<b>Caveat, stated plainly:</b> three papers is a small sample, and two of the three predate your syllabus revision. Tier 1 rests on repetition that is genuinely strong; Unit V rests on the syllabus text alone and carries no precedent whatsoever. Prepare it as if it were unpredictable, because it is.
+</div>
+
+</body>
+</html>
