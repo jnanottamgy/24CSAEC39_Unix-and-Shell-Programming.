@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>UNIX Shell Programming — Predicted Questions with Model Answers</title>
+<style>
+@page{size:A4;margin:12mm 11mm 13mm}
+*{box-sizing:border-box}
+body{font-family:"Inter","Helvetica Neue",Arial,sans-serif;font-size:8.6pt;line-height:1.45;color:#14171c;margin:0}
+.hdr{background:#14171c;color:#fff;padding:5mm 6mm;margin-bottom:4mm}
+.hdr h1{font-size:18pt;margin:0;letter-spacing:-0.5px}
+.hdr .s{font-size:8.2pt;color:#b9c2cd;margin-top:1.5mm;line-height:1.5}
+h2{font-size:13pt;background:#14171c;color:#fff;padding:2.2mm 3mm;margin:5mm 0 3mm;letter-spacing:-0.3px;page-break-after:avoid}
+h2 span{float:right;font-size:8pt;color:#c9d2dc;font-weight:600;padding-top:1.2mm}
+.q{border:0.6pt solid #b6bec9;border-left:3pt solid #17683a;margin-bottom:3.5mm}
+.q.likely{border-left-color:#b5730b}.q.new{border-left-color:#6b3fa0}
+.qh{background:#f2f5f8;padding:2mm 3mm;border-bottom:0.5pt solid #b6bec9;page-break-after:avoid;page-break-inside:avoid}
+.qt{font-weight:700;font-size:9.4pt;color:#14171c;margin-bottom:0.8mm}
+.qm{font-size:7.3pt;color:#4a5360;font-weight:600}
+.tag{display:inline-block;font-size:6.5pt;font-weight:700;padding:0.5mm 1.4mm;border-radius:2px;color:#fff;margin-right:1.4mm;vertical-align:1.2px;letter-spacing:0.3px}
+.lk{background:#17683a}.lb{background:#b5730b}.ln{background:#6b3fa0}
+.a{padding:2.5mm 3mm}
+.a p{margin:0 0 1.6mm}
+.a ul{margin:0 0 1.8mm;padding-left:4.2mm}.a li{margin-bottom:0.7mm}
+b{color:#14171c}
+code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:7.6pt;background:#eef1f5;padding:0.2mm 0.9mm;border-radius:2px}
+pre{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:7.2pt;background:#f7f9fb;border:0.5pt solid #ccd2da;border-left:2pt solid #5a6472;padding:2mm 2.6mm;margin:1.5mm 0;line-height:1.35;white-space:pre;overflow:hidden;page-break-inside:avoid}
+pre.dia{background:#fff;border-left-color:#14171c;font-size:7pt;line-height:1.2}
+table{width:100%;border-collapse:collapse;font-size:7.8pt;margin:1.5mm 0}
+tr{page-break-inside:avoid}
+thead{display:table-header-group}
+.sub{page-break-after:avoid}
+.tip{page-break-inside:avoid}
+th{background:#3d4550;color:#fff;text-align:left;padding:1.2mm 1.8mm;font-size:7.4pt;font-weight:600}
+td{padding:1.1mm 1.8mm;border-bottom:0.3pt solid #ccd2da;vertical-align:top}
+tr:nth-child(even) td{background:#f7f9fb}
+.tip{background:#fff8e6;border-left:2.4pt solid #b5730b;padding:1.6mm 2.4mm;margin:1.5mm 0;font-size:7.9pt}
+.warn{background:#fdf3f2;border-left:2.4pt solid #b3261e;padding:2mm 3mm;margin-bottom:4mm;font-size:8.2pt}
+.sub{font-weight:700;font-size:8.7pt;margin:2.2mm 0 1mm;color:#14171c}
+.ft{margin-top:4mm;padding-top:2mm;border-top:0.8pt solid #14171c;font-size:7.3pt;color:#5a6472}
+</style></head><body>
+
+<div class="hdr">
+<h1>Predicted Questions — with Model Answers</h1>
+<div class="s"><b>UNIX Shell Programming · 24CSAEC39 / CSAEC310 · Sem III · 50 marks · 2 hrs</b><br>
+Every question below is a prediction from the April 2023, August 2023 and March 2024 papers, filtered to your syllabus — written out with a full answer at the mark weight it carries.<br>
+<b>Tags:</b> <span class="tag lk">LOCK</span>repeated across papers &nbsp; <span class="tag lb">LIKELY</span>single-paper precedent or syllabus-mandated &nbsp; <span class="tag ln">UNIT V</span>no past-paper history, derived from syllabus</div>
+</div>
+
+<div class="warn">
+<b>Exam pattern.</b> <b>Part A</b> — 10 MCQs × 1 mark, no choice, exactly 2 per unit in unit order. <b>Part B</b> — 5 × 8 marks, <b>one full question per unit from a choice of two</b> (Unit I: Q1 or Q2 … Unit V: Q9 or Q10); both sub-parts must come from the same question.<br>
+<b>Out of syllabus — do not study:</b> <code>sed</code>, <code>awk</code>. They appear in the past papers but not in your syllabus.
+</div>
+
+<h2>UNIT I — Introduction to UNIX <span>PART B · Q1 or Q2 · 8 marks</span></h2>
+
+<div class="q"><div class="qh">
+<div class="qt">1. Explain with a figure the kernel and shell relationship in UNIX / Illustrate the layered UNIX architecture with a neat diagram.</div>
+<div class="qm"><span class="tag lk">LOCK</span>Part B · Q1(a) · 4–5 marks · Apr 2023 + Mar 2024</div></div>
+<div class="a">
+<p>UNIX has a <b>layered architecture</b>. Each layer talks only to the layer directly beneath it, so the user is insulated from the hardware.</p>
+<pre class="dia">        +-------------------------------------------+
+        |   USERS  /  APPLICATION PROGRAMS          |
+        |   (vi, cc, who, ls, user programs)        |
+        |   +-----------------------------------+   |
+        |   |   SHELL   (sh, csh, ksh, bash)    |   |
+        |   |   command interpreter             |   |
+        |   |   +---------------------------+   |   |
+        |   |   |        KERNEL             |   |   |
+        |   |   |  process mgmt, memory     |   |   |
+        |   |   |  mgmt, file system,       |   |   |
+        |   |   |  device drivers           |   |   |
+        |   |   |   +-------------------+   |   |   |
+        |   |   |   |    HARDWARE       |   |   |   |
+        |   |   |   |  CPU, memory, I/O |   |   |   |
+        |   |   |   +-------------------+   |   |   |
+        |   |   +---------------------------+   |   |
+        |   +-----------------------------------+   |
+        +-------------------------------------------+</pre>
+<div class="sub">Kernel</div>
+<ul>
+<li>The <b>core of the operating system</b>. Loaded into memory at boot time and stays resident until shutdown.</li>
+<li>Manages <b>memory, processes, the file system and devices</b>. Schedules the CPU among processes.</li>
+<li><b>Only the kernel communicates directly with the hardware.</b> No user program touches hardware itself.</li>
+<li>Programs request kernel services through <b>system calls</b> (<code>open</code>, <code>read</code>, <code>write</code>, <code>fork</code>, <code>exec</code>). This is the kernel's only interface to the outside.</li>
+<li>There is exactly <b>one</b> kernel on a machine.</li>
+</ul>
+<div class="sub">Shell</div>
+<ul>
+<li>The <b>command interpreter</b> — the interface between the user and the kernel. It is <b>not</b> part of the kernel; it is an ordinary user program.</li>
+<li>Reads the command typed at the prompt, interprets it, and has the kernel execute it, then displays the result.</li>
+<li>Because it is a user program, <b>many shells can exist</b> and each user can choose one: <b>Bourne shell (sh)</b>, <b>C shell (csh)</b>, <b>Korn shell (ksh)</b>, <b>Bash</b>.</li>
+<li>Also a <b>programming language</b> — commands can be collected into a shell script.</li>
+</ul>
+<div class="sub">Shell interpretive cycle</div>
+<p>The shell repeats this loop for every command: <b>display prompt → read the command line → parse it (split into words, expand wildcards and variables) → locate the command in <code>PATH</code> → <code>fork</code> a child and <code>exec</code> the command → wait for it to finish → display the prompt again.</b></p>
+<div class="tip"><b>Marks tip:</b> the diagram alone is worth about half. Draw it, label all four layers, then write two or three lines each on kernel and shell. Mention <i>system calls</i> and <i>shell interpretive cycle</i> by name.</div>
+</div></div>
+
+<div class="q"><div class="qh">
+<div class="qt">2. What are file permissions? Explain the use of <code>chmod</code> to change file permissions using both the absolute and the relative methods.</div>
+<div class="qm"><span class="tag lk">LOCK</span>Part B · Q2 · 3–4 marks · Part B 2 of 3 papers, <b>Part A 3 of 3</b></div></div>
+<div class="a">
+<p>Every UNIX file has <b>nine permission bits</b>, arranged as three sets of three. The sets are <b>owner (user), group, others</b>; within each set the bits are <b>r (read), w (write), x (execute)</b>.</p>
+<pre>$ ls -l note.txt
+-rwxr-xr--  1 jnan cse  120 Sep 17 10:20 note.txt
+ |__||__||__|
+  |   |   +--- others : r--  (read only)
+  |   +------- group  : r-x  (read, execute)
+  +----------- owner  : rwx  (read, write, execute)</pre>
+<table><thead><tr><th style="width:18%">Permission</th><th style="width:14%">File</th><th>Directory</th></tr></thead><tbody>
+<tr><td><b>r</b> (read)</td><td>display its contents</td><td>list the names in it (<code>ls</code>)</td></tr>
+<tr><td><b>w</b> (write)</td><td>modify its contents</td><td>create or delete files inside it</td></tr>
+<tr><td><b>x</b> (execute)</td><td>run it as a program</td><td><code>cd</code> into it</td></tr></tbody></table>
+<div class="sub">Method 1 — Absolute (octal) method</div>
+<p>Each permission has a weight: <b>r = 4, w = 2, x = 1</b>. Add the weights for each of the three sets to get a three-digit octal number.</p>
+<table><thead><tr><th style="width:16%">Octal</th><th style="width:22%">Permissions</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>chmod 755 f</code></td><td>rwx r-x r-x</td><td>owner all; group and others read + execute</td></tr>
+<tr><td><code>chmod 644 f</code></td><td>rw- r-- r--</td><td>owner read+write; everyone else read only</td></tr>
+<tr><td><code>chmod 744 f</code></td><td>rwx r-- r--</td><td>owner all; group and others read only</td></tr>
+<tr><td><code>chmod 777 f</code></td><td>rwx rwx rwx</td><td>everyone everything</td></tr>
+<tr><td><code>chmod 600 f</code></td><td>rw- --- ---</td><td>private to the owner</td></tr></tbody></table>
+<p><b>Absolute is "set exactly this"</b> — it replaces all nine bits, whatever they were before.</p>
+<div class="sub">Method 2 — Relative (symbolic) method</div>
+<p>The expression has <b>three components</b>: <b>who + operator + permission</b>.</p>
+<table><thead><tr><th style="width:24%">Component</th><th>Values</th></tr></thead><tbody>
+<tr><td><b>Who</b></td><td><code>u</code> user/owner · <code>g</code> group · <code>o</code> others · <code>a</code> all three</td></tr>
+<tr><td><b>Operator</b></td><td><code>+</code> add · <code>-</code> remove · <code>=</code> set exactly</td></tr>
+<tr><td><b>Permission</b></td><td><code>r</code> · <code>w</code> · <code>x</code></td></tr></tbody></table>
+<pre>chmod u+x  script.sh     add execute for the owner
+chmod go-w note.txt      remove write from group and others
+chmod a=r  note.txt      everyone gets read only
+chmod u+x,go-r file      two expressions, separated by a comma</pre>
+<p><b>Relative is "change only what I name"</b> — bits not mentioned keep their old value.</p>
+<div class="tip"><b>Also worth a line:</b> default permission for an ordinary file is <b>666 (rw-rw-rw-)</b> and for a directory <b>777</b>; the actual permission is these minus the <code>umask</code> value (typically 022, giving 644 and 755). Only the <b>owner</b> or <b>root</b> may change a file's permissions.</div>
+</div></div>
+
+<div class="q"><div class="qh">
+<div class="qt">3. Explain the following commands with syntax, options and an example. <i>(The list changes every year — this covers the whole inventory.)</i></div>
+<div class="qm"><span class="tag lk">LOCK</span>Part B · Q1(b) or Q2(a) · 4–5 marks · <b>3 of 3 papers</b></div></div>
+<div class="a">
+<p>Answer each command in the same three-part shape: <b>what it does → syntax with two options → one worked example</b>.</p>
+<table><thead><tr><th style="width:11%">Command</th><th style="width:29%">Purpose &amp; syntax</th><th style="width:26%">Key options</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>echo</code></td><td>Display text / variable value.<br><code>echo [options] string</code></td><td><code>-n</code> no trailing newline<br><code>-e</code> enable escapes (<code>\n</code>, <code>\t</code>)</td><td><code>echo -n "Name: "</code></td></tr>
+<tr><td><code>printf</code></td><td>Formatted output, like C.<br><code>printf "format" args</code></td><td><code>%s</code> string, <code>%d</code> integer</td><td><code>printf "%s is %d\n" Sam 20</code></td></tr>
+<tr><td><code>ls</code></td><td>List directory contents.<br><code>ls [options] [dir]</code></td><td><code>-l</code> long listing · <code>-a</code> include hidden<br><code>-R</code> recursive · <code>-t</code> by time</td><td><code>ls -la /home</code></td></tr>
+<tr><td><code>who</code></td><td>Users currently logged in.<br><code>who [options]</code></td><td><code>-H</code> print header<br><code>who am i</code> your own line</td><td><code>who -H</code></td></tr>
+<tr><td><code>date</code></td><td>Show/set system date and time.<br><code>date [+format]</code></td><td><code>+%d-%m-%Y</code> · <code>+%H:%M:%S</code></td><td><code>date "+%d-%m-%Y"</code></td></tr>
+<tr><td><code>passwd</code></td><td>Change your login password.<br><code>passwd [user]</code></td><td>prompts for old then new password</td><td><code>passwd</code></td></tr>
+<tr><td><code>uname</code></td><td>System information.<br><code>uname [options]</code></td><td><code>-a</code> all · <code>-r</code> kernel release</td><td><code>uname -a</code></td></tr>
+<tr><td><code>pwd</code></td><td>Print working directory.</td><td>(no options needed)</td><td><code>pwd</code></td></tr>
+<tr><td><code>cd</code></td><td>Change directory.<br><code>cd [dir]</code></td><td><code>cd ..</code> parent · <code>cd</code> alone → home</td><td><code>cd /usr/bin</code></td></tr>
+<tr><td><code>mkdir</code></td><td>Create directory.<br><code>mkdir [-p] dir</code></td><td><code>-p</code> create parent directories too</td><td><code>mkdir -p a/b/c</code></td></tr>
+<tr><td><code>rmdir</code></td><td>Remove an <b>empty</b> directory.</td><td>fails if the directory is not empty</td><td><code>rmdir olddir</code></td></tr>
+<tr><td><code>cp</code></td><td>Copy files.<br><code>cp [options] src dest</code></td><td><code>-i</code> prompt before overwrite<br><code>-r</code> recursive · <code>-p</code> preserve attributes</td><td><code>cp -i f1 f2</code></td></tr>
+<tr><td><code>mv</code></td><td>Move <b>or rename</b> a file.<br><code>mv [options] src dest</code></td><td><code>-i</code> interactive · <code>-f</code> force</td><td><code>mv old.txt new.txt</code></td></tr>
+<tr><td><code>rm</code></td><td>Delete files.<br><code>rm [options] file</code></td><td><code>-i</code> confirm · <code>-r</code> recursive · <code>-f</code> force</td><td><code>rm -i note.txt</code></td></tr>
+<tr><td><code>cat</code></td><td>Display / create / concatenate files.<br><code>cat [options] file(s)</code></td><td><code>-n</code> number lines · <code>-s</code> squeeze blanks</td><td><code>cat f1 f2 &gt; f3</code></td></tr>
+<tr><td><code>more</code></td><td>Display a file one screen at a time.</td><td>Space = next page, <code>q</code> = quit</td><td><code>more bigfile.txt</code></td></tr>
+<tr><td><code>wc</code></td><td>Count lines, words, characters.<br><code>wc [options] file</code></td><td><code>-l</code> lines · <code>-w</code> words · <code>-c</code> characters</td><td><code>wc -l file.txt</code></td></tr>
+<tr><td><code>man</code></td><td>Display the manual page for a command.</td><td><code>man -k</code> keyword search</td><td><code>man ls</code></td></tr>
+<tr><td><code>script</code></td><td>Record a terminal session into a file.</td><td>ends with <code>exit</code>; default file <code>typescript</code></td><td><code>script session.log</code></td></tr>
+<tr><td><code>stty</code></td><td>Set/display terminal settings.</td><td><code>-a</code> show all settings</td><td><code>stty -a</code></td></tr>
+<tr><td><code>od</code></td><td>Octal dump — view a file's bytes.</td><td><code>-b</code> octal · <code>-c</code> characters · <code>-x</code> hex</td><td><code>od -c file.txt</code></td></tr>
+<tr><td><code>lp</code></td><td>Send a file to the printer.</td><td><code>-d</code> printer name · <code>-n</code> copies</td><td><code>lp -n 2 report.txt</code></td></tr>
+<tr><td><code>tar</code></td><td>Archive many files into one.<br><code>tar [options] archive files</code></td><td><code>-c</code> create · <code>-x</code> extract · <code>-t</code> list<br><code>-v</code> verbose · <code>-f</code> archive filename</td><td><code>tar -cvf bk.tar dir/</code></td></tr>
+<tr><td><code>gzip</code></td><td>Compress a file (<code>.gz</code>).</td><td><code>gunzip</code> decompress · <code>zcat</code> view</td><td><code>gzip bk.tar</code></td></tr>
+<tr><td><code>PATH</code></td><td>Environment variable holding the list of directories the shell searches for commands.</td><td>colon-separated list</td><td><code>echo $PATH</code></td></tr></tbody></table>
+</div></div>
+
+<div class="q likely"><div class="qh">
+<div class="qt">4. Illustrate the working of the <code>vi</code> editor with its different modes.</div>
+<div class="qm"><span class="tag lb">LIKELY</span>Part B · Q1(a) · 4 marks · Aug 2023 · explicitly named in your syllabus</div></div>
+<div class="a">
+<p><code>vi</code> (visual editor) is the standard full-screen text editor of UNIX. It works in <b>three modes</b>, and the same keystroke means different things in each — this is why mode awareness matters.</p>
+<pre class="dia">                         Esc
+         +---------------------------------+
+         |                                 |
+         v        i a o I A O              |
+   +------------+ ----------> +-------------------+
+   |  COMMAND   |             |   INSERT MODE     |
+   |   MODE     | <---------- |  (text is typed)  |
+   | (default)  |     Esc     +-------------------+
+   +------------+
+         |  :
+         v
+   +--------------------+
+   |  ex / ESCAPE MODE  |   :w  :q  :wq  :q!
+   |  (last line)       |
+   +--------------------+
+         |  Enter / Esc
+         +--> back to Command mode</pre>
+<table><thead><tr><th style="width:20%">Mode</th><th style="width:22%">Entered by</th><th>What it is for</th></tr></thead><tbody>
+<tr><td><b>1. Command mode</b></td><td>Default on opening <code>vi file</code>; press <b>Esc</b> from any mode</td><td>Navigation and editing. Keys are commands, not text.<br><code>h j k l</code> left/down/up/right · <code>dd</code> delete line · <code>yy</code> copy (yank) line · <code>p</code> paste · <code>x</code> delete a character · <code>u</code> undo · <code>G</code> last line</td></tr>
+<tr><td><b>2. Insert mode</b></td><td><code>i</code> insert before cursor · <code>a</code> append after · <code>o</code> open line below · <code>I A O</code> variants</td><td>Whatever you type becomes text in the file. Leave with <b>Esc</b>.</td></tr>
+<tr><td><b>3. ex / Escape mode</b></td><td>Type <code>:</code> in command mode — the cursor drops to the last line</td><td>File-level commands.<br><code>:w</code> save · <code>:q</code> quit · <code>:wq</code> save and quit · <code>:q!</code> quit discarding changes · <code>:set nu</code> line numbers · <code>:/pattern</code> search</td></tr></tbody></table>
+<div class="tip"><b>Marks tip:</b> draw the three-box mode diagram with the transition keys on the arrows. Naming <b>Esc</b> as the universal way back to Command mode is the point the examiner looks for.</div>
+</div></div>
+
+<div class="q likely"><div class="qh">
+<div class="qt">5. List and explain the salient features of the UNIX operating system.</div>
+<div class="qm"><span class="tag lb">LIKELY</span>Part B · Q1(b) · 4 marks · Mar 2024 (most recent paper)</div></div>
+<div class="a"><table><thead><tr><th style="width:24%">Feature</th><th>Explanation</th></tr></thead><tbody>
+<tr><td><b>Multi-user</b></td><td>Many users can log in and work on the same machine at the same time; the kernel keeps each user's files and processes separate.</td></tr>
+<tr><td><b>Multitasking</b></td><td>One user can run several programs at once — one in the foreground, others in the background with <code>&amp;</code>. The kernel time-shares the CPU.</td></tr>
+<tr><td><b>Portability</b></td><td>Written almost entirely in <b>C</b>, not assembly, so UNIX can be moved to a new machine by recompiling. This is the main reason it spread.</td></tr>
+<tr><td><b>Hierarchical file system</b></td><td>A single inverted tree rooted at <code>/</code>. Everything — including devices — is treated as a file.</td></tr>
+<tr><td><b>Security</b></td><td>Login name and password, plus the three-level (owner/group/others) <b>file permission</b> system, plus file ownership.</td></tr>
+<tr><td><b>The shell</b></td><td>A programmable command interpreter. Users can write shell scripts, so the interface itself is extensible.</td></tr>
+<tr><td><b>Pipes and filters</b></td><td>The <b>building-block approach</b>: each tool does one small job well, and pipes join them into larger jobs — <code>who | wc -l</code>.</td></tr>
+<tr><td><b>Communication</b></td><td>Utilities for messaging and networking between users and machines — <code>mail</code>, <code>write</code>, <code>ssh</code>, <code>ftp</code>.</td></tr>
+<tr><td><b>Large tool set</b></td><td>Hundreds of small general-purpose utilities supplied with the system.</td></tr>
+</tbody></table></div></div>
+
+<h2>UNIT II — Shells &amp; Utilities <span>PART B · Q3 or Q4 · 8 marks &nbsp;|&nbsp; ★ ANSWER Q3</span></h2>
+
+<div class="q"><div class="qh">
+<div class="qt">6. Illustrate the various stages of a UNIX session with a neat diagram.</div>
+<div class="qm"><span class="tag lk">HIGHEST CONFIDENCE</span>Part B · Q3(a) · 4–5 marks · <b>ALL 3 PAPERS, same slot, near-identical wording</b></div></div>
+<div class="a">
+<p>A UNIX session is everything between logging in and logging out. It has <b>three stages: Login → Work (the session proper) → Logout.</b></p>
+<pre class="dia">              +-------------------+
+              |   Login prompt    | <-----------------+
+              |   login:          |                   |
+              +---------+---------+                   |
+                        | username                    |
+                        v                             |
+              +-------------------+                   |
+              |  Password prompt  |                   |
+              |  (not echoed)     |                   |
+              +---------+---------+                   |
+                        |                             |
+                        v                             |
+                   /---------\                        |
+                  /  Verify   \     INVALID           |
+                 / /etc/passwd \ --------------------+
+                 \ /etc/shadow /   "login incorrect"
+                  \-----------/
+                        | VALID
+                        v
+              +---------------------------+
+              |  Kernel starts the SHELL  |
+              |  reads /etc/profile then  |
+              |  ~/.profile  /  .bashrc   |
+              +---------+-----------------+
+                        v
+              +---------------------------+
+              |   $ prompt  -  WORK PHASE | <----+
+              |   shell interpretive cycle|      | next
+              |   read -> parse -> fork   |      | command
+              |   -> exec -> wait -> print|------+
+              +---------+-----------------+
+                        | exit  or  Ctrl+D
+                        v
+              +-------------------+
+              |      LOGOUT       |
+              | shell terminates, |
+              | back to login     |
+              +-------------------+</pre>
+<div class="sub">1 · Login stage</div>
+<ul>
+<li>The <code>getty</code> process displays the <b>login:</b> prompt on the terminal.</li>
+<li>The user enters a <b>username</b>, then a <b>password</b> — which is <b>not echoed</b> to the screen.</li>
+<li><code>login</code> verifies the pair against <b><code>/etc/passwd</code></b> (user details) and <b><code>/etc/shadow</code></b> (encrypted passwords). The entered password is encrypted and the result compared — the stored password is never decrypted.</li>
+<li>If verification <b>fails</b>, the message <i>login incorrect</i> appears and control returns to the login prompt.</li>
+</ul>
+<div class="sub">2 · Work phase (the session)</div>
+<ul>
+<li>On success the kernel starts the user's <b>login shell</b>, named in the last field of that user's <code>/etc/passwd</code> entry.</li>
+<li>The shell runs the system profile <code>/etc/profile</code>, then the user's own <code>~/.profile</code> (or <code>.bash_profile</code> / <code>.bashrc</code>) — this is where <code>PATH</code>, prompts and aliases get set.</li>
+<li>The user is placed in their <b>home directory</b> and the <b>$ prompt</b> appears.</li>
+<li>The shell now repeats the <b>shell interpretive cycle</b> for every command: display prompt → read the line → parse and expand → locate the command → <code>fork</code> and <code>exec</code> → wait → display output → prompt again.</li>
+</ul>
+<div class="sub">3 · Logout stage</div>
+<ul>
+<li>The user types <code>exit</code> or presses <b>Ctrl+D</b> (end-of-file) at the prompt.</li>
+<li>The login shell terminates, the session's processes are cleaned up, and <code>getty</code> redisplays the login prompt for the next user.</li>
+</ul>
+<div class="tip"><b>Marks tip:</b> this is the single most repeated question on the paper. Draw the flow with the <b>invalid-password loop back to the login prompt</b> — that arrow is what separates a full-mark diagram from a half-mark one. Name <code>/etc/passwd</code>, <code>.profile</code> and <b>Ctrl+D</b> explicitly.</div>
+</div></div>
+
+<div class="q"><div class="qh">
+<div class="qt">7. Discuss process utilities — the types of process, process initialization and termination, and how <code>nice</code> and <code>renice</code> adjust the priority of a running process.</div>
+<div class="qm"><span class="tag lk">LOCK</span>Part B · Q3(b) · 4–5 marks · <b>3 of 3 papers</b>, angle rotates — all three covered here</div></div>
+<div class="a">
+<p>A <b>process</b> is a program in execution. Every process has a unique <b>PID</b>, a parent (<b>PPID</b>), an owner, and a priority.</p>
+<div class="sub">Types of process</div>
+<table><thead><tr><th style="width:22%">Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><b>Interactive / foreground</b></td><td>Started from the terminal and holds it — the shell waits for it to finish before returning the prompt.</td></tr>
+<tr><td><b>Background</b></td><td>Started with <code>&amp;</code>. Runs while the shell returns the prompt immediately: <code>sort big.txt &amp;</code></td></tr>
+<tr><td><b>Daemon</b></td><td>A system process that runs continuously in the background, not attached to any terminal — <code>init</code>, <code>cron</code>, <code>lpd</code>, <code>inetd</code>.</td></tr>
+<tr><td><b>Zombie</b></td><td>Has finished executing, but its parent has not yet collected its exit status, so its entry remains in the process table.</td></tr>
+<tr><td><b>Orphan</b></td><td>Its parent died first. It is <b>adopted by <code>init</code></b> (PID 1), which becomes its new parent.</td></tr></tbody></table>
+<div class="sub">Process initialization (creation)</div>
+<ul>
+<li><b><code>fork()</code></b> — a process creates a near-exact copy of itself. The copy is the <b>child</b>; it gets a new PID, and <code>fork</code> returns 0 to the child and the child's PID to the parent.</li>
+<li><b><code>exec()</code></b> — the child then overlays its own memory image with the new program to be run. <b>No new process is created</b> by <code>exec</code>; the same PID now runs different code.</li>
+<li><b><code>wait()</code></b> — the parent suspends itself until the child finishes and picks up its exit status.</li>
+<li>This is the <b>fork-and-exec</b> mechanism: it is how the shell runs every external command.</li>
+<li><b><code>init</code> is PID 1</b>, started by the kernel at boot, and is the ancestor of every other process. Boot sequence: <b><code>init</code> → <code>getty</code> → <code>login</code> → shell</b>.</li>
+</ul>
+<div class="sub">Process termination</div>
+<p>A process ends by calling <b><code>exit(n)</code></b>, returning an <b>exit status</b> n to its parent (<b>0 = success</b>). It can also be ended from outside with <code>kill PID</code> (SIGTERM, polite) or <code>kill -9 PID</code> (SIGKILL, cannot be refused).</p>
+<div class="sub">Priority — <code>nice</code> and <code>renice</code></div>
+<ul>
+<li>Every process carries a <b>nice value from −20 to +19</b>, default <b>0</b>. A process is "nice" to others when it gives up CPU — so <b>−20 = highest priority, +19 = lowest</b>.</li>
+<li><b><code>nice</code></b> starts a <b>new</b> command at a changed priority:<br><code>nice -n 10 sort big.txt</code> — runs with priority lowered by 10.</li>
+<li><b><code>renice</code></b> changes the priority of an <b>already running</b> process, identified by PID:<br><code>renice -n 5 -p 4312</code> — lowers the priority of process 4312.</li>
+<li><b>Only the superuser (root) can raise priority</b> (use a negative nice value). An ordinary user may only lower their own processes' priority.</li>
+<li>View priorities with <code>ps -l</code> (NI column) or <code>top</code>.</li>
+</ul>
+<div class="sub">Related process commands</div>
+<p><code>ps</code> show process attributes (<code>-f</code> full, <code>-e</code> every process, <code>-u user</code>) · <code>kill</code> terminate · <code>jobs</code> list jobs of this shell · <code>&amp;</code> run in background · <code>wait</code> · <code>sleep n</code>.</p>
+</div></div>
+
+<div class="q likely"><div class="qh">
+<div class="qt">8. Explain the <code>du</code> command with its different options. / Name and explain UNIX commands used for text processing. / Briefly explain the networking commands.</div>
+<div class="qm"><span class="tag lb">LIKELY</span>Part B · Q4 · 3–5 marks · du 2 of 3, text processing 2 of 3, networking Mar 2024</div></div>
+<div class="a">
+<div class="sub">Disk utilities — <code>du</code> and <code>df</code></div>
+<p><b><code>du</code> (disk usage)</b> reports how much disk space files and directories occupy, walking the directory tree.</p>
+<table><thead><tr><th style="width:16%">Option</th><th>Meaning &amp; example</th></tr></thead><tbody>
+<tr><td><code>-a</code></td><td>Report every <b>file</b>, not just directories — <code>du -a /home/jnan</code></td></tr>
+<tr><td><code>-s</code></td><td><b>Summary</b> — one grand total per argument — <code>du -s /home/jnan</code></td></tr>
+<tr><td><code>-h</code></td><td><b>Human readable</b> — K, M, G instead of blocks — <code>du -h dir</code></td></tr>
+<tr><td><code>-k</code></td><td>Report sizes in <b>kilobytes</b></td></tr>
+<tr><td><code>-c</code></td><td>Print a grand total at the end</td></tr></tbody></table>
+<p><b><code>df</code> (disk free)</b> reports free and used space per mounted file system: <code>df -h</code> human readable, <code>df -i</code> inode usage. <b>Difference:</b> <code>du</code> measures what files consume, <code>df</code> measures what the file system has left.</p>
+<div class="sub">Text processing utilities</div>
+<table><thead><tr><th style="width:14%">Command</th><th style="width:40%">Purpose</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>head</code></td><td>First n lines of a file</td><td><code>head -5 emp.lst</code></td></tr>
+<tr><td><code>tail</code></td><td>Last n lines of a file</td><td><code>tail -5 emp.lst</code></td></tr>
+<tr><td><code>cut</code></td><td>Extract columns or fields</td><td><code>cut -d: -f1 /etc/passwd</code></td></tr>
+<tr><td><code>paste</code></td><td>Join files side by side</td><td><code>paste f1 f2</code></td></tr>
+<tr><td><code>sort</code></td><td>Sort lines</td><td><code>sort -n marks.txt</code></td></tr>
+<tr><td><code>uniq</code></td><td>Handle duplicate adjacent lines</td><td><code>sort f | uniq -d</code></td></tr>
+<tr><td><code>tr</code></td><td>Translate or delete characters</td><td><code>tr 'a-z' 'A-Z' &lt; f</code></td></tr>
+<tr><td><code>wc</code></td><td>Count lines, words, characters</td><td><code>wc -l f</code></td></tr>
+<tr><td><code>grep</code></td><td>Search lines matching a pattern</td><td><code>grep "unix" f</code></td></tr></tbody></table>
+<div class="sub">Networking commands</div>
+<table><thead><tr><th style="width:15%">Command</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><code>ping</code></td><td>Tests whether a host is <b>reachable</b>, by sending ICMP echo-request packets and timing the replies. <code>ping google.com</code></td></tr>
+<tr><td><code>host</code></td><td><b>DNS lookup</b> — converts a hostname to an IP address and back. <code>host google.com</code></td></tr>
+<tr><td><code>tracepath</code> / <code>traceroute</code></td><td>Shows the <b>route</b> packets take to a host, listing every intermediate hop and its delay.</td></tr>
+<tr><td><code>netstat</code></td><td>Displays <b>network connections</b>, listening ports, routing tables and interface statistics. <code>netstat -r</code></td></tr>
+<tr><td><code>route</code></td><td><b>Manipulates the TCP/IP routing table</b> — shows, adds or deletes routes.</td></tr>
+<tr><td><code>ifconfig</code></td><td>Configures or displays network interface parameters (IP address, netmask).</td></tr>
+<tr><td><code>ftp</code></td><td>File Transfer Protocol — transfers files between hosts (<code>get</code>, <code>put</code>, <code>mget</code>).</td></tr>
+<tr><td><code>telnet</code> / <code>ssh</code></td><td>Log in to a remote machine. <b><code>ssh</code> is encrypted; <code>telnet</code> is not</b> — prefer <code>ssh</code>.</td></tr>
+<tr><td><code>finger</code></td><td>Displays information about a user (login name, home directory, last login).</td></tr></tbody></table>
+<div class="sub">Backup utilities — <code>tar</code> and <code>gzip</code></div>
+<p><b><code>tar</code></b> bundles many files into one archive (it does not compress): <code>-c</code> create, <code>-x</code> extract, <code>-t</code> list contents, <code>-v</code> verbose, <code>-f</code> name the archive file.<br>
+<code>tar -cvf backup.tar project/</code> → create &nbsp;·&nbsp; <code>tar -xvf backup.tar</code> → extract &nbsp;·&nbsp; <code>tar -tvf backup.tar</code> → list<br>
+<b><code>gzip</code></b> compresses a single file, replacing it with <code>.gz</code>: <code>gzip backup.tar</code> → <code>backup.tar.gz</code>; <code>gunzip</code> restores it; <code>zcat</code> views it without unpacking. Combined: <code>tar -zcvf backup.tar.gz project/</code>.</p>
+</div></div>
+
+<h2>UNIT III — Standard Streams <span>PART B · Q5 or Q6 · 8 marks &nbsp;|&nbsp; ★ ANSWER Q5</span></h2>
+
+<div class="q"><div class="qh">
+<div class="qt">9. Explain the three standard streams / standard redirection files with respect to UNIX. What is redirection?</div>
+<div class="qm"><span class="tag lk">HIGHEST CONFIDENCE</span>Part B · Q5(a) · 3–5 marks · <b>ALL 3 PAPERS, same slot</b></div></div>
+<div class="a">
+<p>When any UNIX command runs, the kernel opens <b>three files automatically</b> for it. These are the <b>standard streams</b>, and each has a fixed <b>file descriptor</b> number.</p>
+<pre class="dia">                          +-----------------+
+   stdin  (0) ----------->|                 |-----------> stdout (1)
+   default: keyboard      |    COMMAND      |   default: terminal screen
+                          |                 |
+                          |                 |-----------> stderr (2)
+                          +-----------------+   default: terminal screen</pre>
+<table><thead><tr><th style="width:18%">Stream</th><th style="width:10%">fd</th><th style="width:22%">Default source/target</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><b>Standard input</b> (stdin)</td><td><b>0</b></td><td>Keyboard</td><td>Where the command reads its input from</td></tr>
+<tr><td><b>Standard output</b> (stdout)</td><td><b>1</b></td><td>Terminal / screen</td><td>Where normal results are written</td></tr>
+<tr><td><b>Standard error</b> (stderr)</td><td><b>2</b></td><td>Terminal / screen</td><td>Where error messages are written — kept separate so errors don't pollute redirected output</td></tr></tbody></table>
+<div class="sub">Redirection</div>
+<p><b>Redirection is the shell's ability to detach a standard stream from its default file and attach it to a file of the user's choosing.</b> The command itself is unchanged and unaware — it still just reads fd 0 and writes fd 1. The shell does the reconnection before the command starts.</p>
+<table><thead><tr><th style="width:20%">Operator</th><th style="width:26%">Meaning</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>&gt;</code></td><td>Output redirection — <b>creates or overwrites</b></td><td><code>ls -l &gt; list.txt</code></td></tr>
+<tr><td><code>&gt;&gt;</code></td><td>Output redirection — <b>appends</b> to the file</td><td><code>date &gt;&gt; log.txt</code></td></tr>
+<tr><td><code>&lt;</code></td><td>Input redirection — read from a file instead of the keyboard</td><td><code>wc -l &lt; list.txt</code></td></tr>
+<tr><td><code>2&gt;</code></td><td>Redirect <b>errors only</b></td><td><code>ls xyz 2&gt; err.log</code></td></tr>
+<tr><td><code>2&gt;&gt;</code></td><td>Append errors</td><td><code>cmd 2&gt;&gt; err.log</code></td></tr>
+<tr><td><code>&gt; f 2&gt;&amp;1</code></td><td>Send <b>both</b> output and errors to the same file</td><td><code>cmd &gt; all.log 2&gt;&amp;1</code></td></tr>
+<tr><td><code>/dev/null</code></td><td>The "bit bucket" — anything written to it is <b>discarded</b></td><td><code>cmd 2&gt; /dev/null</code></td></tr></tbody></table>
+<pre>$ ls xyz               # xyz does not exist
+ls: cannot access 'xyz': No such file or directory     <- goes to stderr (2)
+
+$ ls xyz > out.txt     # only stdout redirected; the error STILL appears on screen
+ls: cannot access 'xyz': No such file or directory
+
+$ ls xyz 2> err.txt    # now the error goes to the file, screen stays clean</pre>
+<div class="tip"><b>Marks tip:</b> the example above — showing that <code>&gt;</code> alone does <b>not</b> capture errors — is the cleanest way to demonstrate why stdout and stderr are separate streams. Examiners give credit for it.</div>
+</div></div>
+
+<div class="q"><div class="qh">
+<div class="qt">10. Demonstrate the working of the <code>tee</code> command with a necessary diagram. Explain how <code>tee</code> can be integrated into a pipeline.</div>
+<div class="qm"><span class="tag lk">LOCK</span>Part B · Q5(b) or Q6(a) · 4–5 marks · 2 of 3 papers + a Part A MCQ</div></div>
+<div class="a">
+<p><b><code>tee</code> reads from standard input and writes simultaneously to standard output <i>and</i> to one or more files.</b> It is named after the plumbing <b>T-junction</b>: the data stream arrives and leaves in two directions at once.</p>
+<pre class="dia">                            +---------+
+   stdin  ----------------->|   tee   |----------------> stdout (screen)
+   (output of the           +----+----+                  passes on to the
+    previous command)            |                       next command in
+                                 v                       the pipeline
+                            +---------+
+                            |  file   |   (saved copy)
+                            +---------+</pre>
+<p><b>Syntax:</b> <code>command | tee [-a] filename | next-command</code> &nbsp;— <code>-a</code> <b>appends</b> instead of overwriting.</p>
+<div class="sub">Why it is needed</div>
+<p>A pipe sends output <b>onward only</b> — once data flows into the next command it is gone, so you cannot see or save the intermediate result. Redirection with <code>&gt;</code> does the opposite: it captures the output but <b>ends the pipeline</b>. <code>tee</code> solves both: it <b>saves a copy and lets the data continue</b>.</p>
+<pre>$ ls -l | tee list.txt | wc -l
+12
+                # list.txt now holds the full listing,
+                # and wc -l still received it and printed the count
+
+$ who | tee users.txt | grep "jnan"
+                # saves everyone logged in, but displays only jnan's line
+
+$ ls -l | tee -a log.txt | wc -l
+                # appends to log.txt instead of overwriting it
+
+$ cat file | tee copy1 copy2 copy3
+                # tee can write to several files at once</pre>
+<div class="tip"><b>Marks tip:</b> draw the T-junction, give the three-stage pipeline example, and state the one-line reason: <b>a pipe passes data on but does not save it; <code>&gt;</code> saves data but stops the pipeline; <code>tee</code> does both.</b></div>
+</div></div>
+
+<div class="q likely"><div class="qh">
+<div class="qt">11. Explain the types of variables in UNIX with examples. What are environment variables?</div>
+<div class="qm"><span class="tag lb">LIKELY</span>Part B · Q5(b) or Q6(b) · 3–4 marks · Apr 2023 · <b>two separate syllabus lines</b></div></div>
+<div class="a">
+<p>A shell variable is a name holding a value. <b>Assignment rule: no spaces around the <code>=</code> sign.</b> Read a variable's value by prefixing <code>$</code>.</p>
+<pre>$ x=10          # correct
+$ x = 10        # WRONG - shell reads x as a command
+$ echo $x
+10</pre>
+<table><thead><tr><th style="width:24%">Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><b>1. Local (shell) variables</b></td><td>Created by the user in the current shell. Exist <b>only in that shell</b> — a child process or sub-shell cannot see them. <code>name=Sam ; echo $name</code></td></tr>
+<tr><td><b>2. Environment variables</b></td><td>Local variables that have been <b>exported</b>. They are passed to every child process the shell creates, so a script can read them. By convention written in UPPERCASE.</td></tr>
+<tr><td><b>3. Shell / system variables</b></td><td>Set by the system at login, controlling how the shell behaves — <code>PATH</code>, <code>HOME</code>, <code>PS1</code>.</td></tr>
+<tr><td><b>4. Positional parameters</b></td><td>Set automatically from command-line arguments — <code>$0 $1 $2 … $# $* $?</code> (see Unit V).</td></tr></tbody></table>
+<div class="sub">Important environment variables</div>
+<table><thead><tr><th style="width:18%">Variable</th><th>Holds</th></tr></thead><tbody>
+<tr><td><code>PATH</code></td><td>Colon-separated list of directories the shell searches for commands</td></tr>
+<tr><td><code>HOME</code></td><td>Your home directory — where <code>cd</code> with no argument takes you</td></tr>
+<tr><td><code>SHELL</code></td><td>Full path of your login shell</td></tr>
+<tr><td><code>USER</code> / <code>LOGNAME</code></td><td>Your login name</td></tr>
+<tr><td><code>PS1</code></td><td>Primary prompt string (normally <code>$</code>)</td></tr>
+<tr><td><code>PS2</code></td><td>Secondary/continuation prompt (normally <code>&gt;</code>)</td></tr>
+<tr><td><code>TERM</code></td><td>Terminal type — used by <code>vi</code> and other full-screen programs</td></tr>
+<tr><td><code>MAIL</code></td><td>Path of your mailbox file</td></tr></tbody></table>
+<pre>$ echo $HOME              /home/jnan
+$ echo $PATH              /usr/local/bin:/usr/bin:/bin
+$ set                     list ALL variables
+$ env                     list only environment variables
+$ x=10                    create a local variable
+$ export x                promote it to an environment variable
+$ export y=20             create and export in one step
+$ unset x                 remove a variable
+$ readonly z=5            make it unchangeable</pre>
+<div class="tip"><b>The key distinction for marks:</b> a <b>local</b> variable dies with the current shell and is invisible to child processes; an <b>environment</b> variable is inherited by every child process. <code>export</code> is what converts one into the other.</div>
+</div></div>
+
+<div class="q likely"><div class="qh">
+<div class="qt">12. What is an alias? Explain creating and removing aliases. Explain the need for command substitution with an example.</div>
+<div class="qm"><span class="tag lb">LIKELY</span>Part B · Q6(b) · 3–4 marks · Aug 2023 (alias) + Apr 2023 (command substitution)</div></div>
+<div class="a">
+<div class="sub">Aliases</div>
+<p>An <b>alias is a short, user-defined name for a long or frequently used command</b>, expanded by the shell before execution. It saves typing and lets you attach default options permanently.</p>
+<pre>$ alias ll='ls -l'            create an alias
+$ alias rm='rm -i'            make deletion always ask first (a safety alias)
+$ alias c=clear
+$ alias                       list all defined aliases
+$ alias ll                    show the definition of one alias
+$ unalias ll                  remove an alias
+$ \ls                         bypass an alias for one run (backslash)</pre>
+<ul>
+<li><b>No spaces around the <code>=</code></b>, and quote the command if it contains spaces or options.</li>
+<li>Aliases defined at the prompt vanish when the shell exits — to make them permanent, put them in <b><code>~/.profile</code> or <code>~/.bashrc</code></b>.</li>
+</ul>
+<div class="sub">Command substitution</div>
+<p><b>Command substitution replaces a command with its own output</b>, so the result of one command can be used inside another command or assigned to a variable.</p>
+<p><b>Two forms:</b> backquotes <code>`command`</code> (older) or <code>$(command)</code> (modern, and nestable).</p>
+<pre>$ echo "Today is date"           # WRONG - prints the word "date" literally
+Today is date
+
+$ echo "Today is `date`"         # command substitution
+Today is Wed Sep 17 10:30:00 IST 2025
+
+$ echo "You have $(ls | wc -l) files in this directory"
+You have 12 files in this directory
+
+$ today=$(date +%d-%m-%Y)        # store output in a variable
+$ echo $today
+17-09-2025
+
+$ users=`who | wc -l`
+$ echo "$users users are logged in"</pre>
+<p><b>Why it is needed:</b> without it, a command's output can only go to the screen or a file. Command substitution lets that output become <b>part of another command line</b> — the shell runs the inner command first, drops its output in place, and only then runs the outer command. It is essential in shell scripts for storing computed results.</p>
+</div></div>
+
+<div class="q likely"><div class="qh">
+<div class="qt">13. Illustrate the different job states in UNIX with a neat diagram. Demonstrate how <code>bg</code> and <code>fg</code> move a job between background and foreground. Examine the role of a signal such as SIGSTOP in job control.</div>
+<div class="qm"><span class="tag lb">LIKELY</span>Appeared in all 3 papers · <b>but your syllabus files this under Unit II process utilities</b> — prepare it, expect it one unit earlier</div></div>
+<div class="a">
+<p><b>Job control</b> is the shell's ability to run several jobs at once and move them between foreground, background and suspended states. A <b>job</b> is a command (or pipeline) started from the shell, given a <b>job number</b> referred to as <code>%1</code>, <code>%2</code>, …</p>
+<pre class="dia">                        fg %1
+        +------------------------------------------+
+        |                                          |
+        v                                          |
+  +---------------+      Ctrl+Z          +------------------+
+  |   RUNNING     |--------------------->|    STOPPED /     |
+  | (foreground)  |    (SIGTSTP)         |    SUSPENDED     |
+  +-------+-------+                      +---------+--------+
+          |                                        |
+          | start with &                           | bg %1
+          |                                        v
+          |                              +------------------+
+          +----------------------------->|    RUNNING       |
+                                         |  (background)    |
+                                         +---------+--------+
+                                                   |
+                                     finishes / kill %1
+                                                   v
+                                         +------------------+
+                                         |   TERMINATED     |
+                                         +------------------+</pre>
+<table><thead><tr><th style="width:18%">Command</th><th>Action</th></tr></thead><tbody>
+<tr><td><code>command &amp;</code></td><td>Start the job directly in the <b>background</b>; the prompt returns at once</td></tr>
+<tr><td><b>Ctrl+Z</b></td><td><b>Suspend</b> the foreground job (sends <b>SIGTSTP</b>) — it stops but is not killed</td></tr>
+<tr><td><code>bg %1</code></td><td>Resume a stopped job, running it in the <b>background</b></td></tr>
+<tr><td><code>fg %1</code></td><td>Bring a background or stopped job into the <b>foreground</b></td></tr>
+<tr><td><code>jobs</code></td><td>List this shell's jobs with their job numbers and states</td></tr>
+<tr><td><code>kill %1</code></td><td>Terminate job 1</td></tr></tbody></table>
+<div class="sub">Signals used in job control</div>
+<table><thead><tr><th style="width:20%">Signal</th><th style="width:14%">Key</th><th>Effect</th></tr></thead><tbody>
+<tr><td><b>SIGINT</b> (2)</td><td>Ctrl+C</td><td>Interrupt — asks the process to terminate. Can be caught or ignored.</td></tr>
+<tr><td><b>SIGTSTP</b> (20)</td><td>Ctrl+Z</td><td>Terminal stop — suspends the job. <b>Can be caught</b>, so a program may refuse it.</td></tr>
+<tr><td><b>SIGSTOP</b> (19)</td><td>—</td><td>Stop the process. <b>Cannot be caught, blocked or ignored</b> — this is what guarantees job control always works, even against a program that traps Ctrl+Z.</td></tr>
+<tr><td><b>SIGCONT</b> (18)</td><td>—</td><td>Continue a stopped process — this is what <code>bg</code> and <code>fg</code> send.</td></tr>
+<tr><td><b>SIGKILL</b> (9)</td><td>—</td><td><code>kill -9</code> — immediate termination, cannot be caught. Last resort.</td></tr></tbody></table>
+<pre>$ sort bigfile.txt          # running in foreground
+^Z                          # Ctrl+Z - suspend it
+[1]+  Stopped    sort bigfile.txt
+$ bg %1                     # resume it in the background
+[1]+ sort bigfile.txt &
+$ jobs
+[1]+  Running    sort bigfile.txt &
+$ fg %1                     # pull it back to the foreground</pre>
+<div class="tip"><b>The SIGSTOP point that earns the mark:</b> SIGTSTP (Ctrl+Z) can be caught and ignored by a program, but <b>SIGSTOP cannot be</b> — so the system always retains the ability to suspend any process.</div>
+</div></div>
+
+<h2>UNIT IV — Filters, grep &amp; Regular Expressions <span>PART B · Q7 or Q8 · 8 marks</span></h2>
+
+<div class="q"><div class="qh">
+<div class="qt">14. Describe the five categories of operators commonly used in regular expressions for matching text patterns.</div>
+<div class="qm"><span class="tag lk">LOCK · FIXED FORMULA</span>Part B · Q7 or Q8 · <b>5 marks</b> · appeared twice, <b>5 marks both times</b>, same phrasing</div></div>
+<div class="a">
+<p>A <b>regular expression</b> is a pattern describing a <i>set</i> of strings, using ordinary characters plus <b>metacharacters</b> that have special meaning. Its operators fall into five categories.</p>
+<div class="sub">1 · Atoms — <i>what</i> to match</div>
+<p>The smallest unit a pattern can match.</p>
+<table><thead><tr><th style="width:16%">Atom</th><th style="width:40%">Matches</th><th>Example</th></tr></thead><tbody>
+<tr><td>literal char</td><td>Itself</td><td><code>grep "unix" f</code></td></tr>
+<tr><td><code>.</code> (dot)</td><td><b>Any single character</b></td><td><code>b.t</code> → bat, bit, but</td></tr>
+<tr><td><code>[abc]</code></td><td>Any <b>one</b> character from the set</td><td><code>[bch]at</code> → bat, cat, hat</td></tr>
+<tr><td><code>[^abc]</code></td><td>Any one character <b>not</b> in the set</td><td><code>[^0-9]</code> → any non-digit</td></tr>
+<tr><td><code>[a-z]</code></td><td>Any one character in the <b>range</b></td><td><code>[A-Z]</code> → any capital</td></tr>
+<tr><td><code>\</code></td><td><b>Escapes</b> a metacharacter, making it literal</td><td><code>\.</code> → a real full stop</td></tr></tbody></table>
+<div class="sub">2 · Quantifiers (repetition operators) — <i>how many</i></div>
+<table><thead><tr><th style="width:16%">Operator</th><th style="width:40%">Meaning</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>*</code></td><td><b>Zero or more</b> of the <b>immediately preceding</b> character</td><td><code>ab*c</code> → ac, abc, abbc</td></tr>
+<tr><td><code>+</code></td><td><b>One or more</b> of the preceding <i>(ERE — needs <code>egrep</code>)</i></td><td><code>ab+c</code> → abc, abbc (not ac)</td></tr>
+<tr><td><code>?</code></td><td><b>Zero or one</b> of the preceding <i>(ERE)</i></td><td><code>colou?r</code> → color, colour</td></tr>
+<tr><td><code>{m,n}</code></td><td>Between <b>m and n</b> occurrences</td><td><code>[0-9]{3}</code> → exactly 3 digits</td></tr></tbody></table>
+<div class="sub">3 · Anchors (position operators) — <i>where</i> in the line</div>
+<table><thead><tr><th style="width:16%">Operator</th><th style="width:40%">Meaning</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>^</code></td><td>Match at the <b>beginning of the line</b></td><td><code>grep "^A" f</code> → lines starting with A</td></tr>
+<tr><td><code>$</code></td><td>Match at the <b>end of the line</b></td><td><code>grep "ed$" f</code> → lines ending in "ed"</td></tr>
+<tr><td><code>^…$</code></td><td>Match the <b>whole line</b></td><td><code>grep "^$" f</code> → empty lines</td></tr></tbody></table>
+<div class="sub">4 · Alternation and grouping</div>
+<table><thead><tr><th style="width:16%">Operator</th><th style="width:40%">Meaning</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>|</code></td><td><b>OR</b> — match either alternative <i>(ERE)</i></td><td><code>egrep "cat|dog" f</code></td></tr>
+<tr><td><code>( )</code></td><td><b>Group</b> a sub-expression so an operator applies to all of it</td><td><code>egrep "(ab)+" f</code> → ab, abab</td></tr></tbody></table>
+<div class="sub">5 · Character classes (POSIX classes)</div>
+<p>Readable names for common sets, written inside a further pair of brackets.</p>
+<table><thead><tr><th style="width:24%">Class</th><th>Matches</th></tr></thead><tbody>
+<tr><td><code>[[:alpha:]]</code></td><td>Any letter</td></tr>
+<tr><td><code>[[:digit:]]</code></td><td>Any digit (same as <code>[0-9]</code>)</td></tr>
+<tr><td><code>[[:alnum:]]</code></td><td>Any letter or digit</td></tr>
+<tr><td><code>[[:upper:]]</code> / <code>[[:lower:]]</code></td><td>Any uppercase / lowercase letter</td></tr>
+<tr><td><code>[[:space:]]</code></td><td>Space, tab or newline</td></tr>
+<tr><td><code>[[:punct:]]</code></td><td>Any punctuation character</td></tr></tbody></table>
+<pre>$ grep "^[A-Z].*[0-9]$" emp.lst
+       # lines starting with a capital AND ending with a digit
+
+$ grep "^$" file | wc -l          count the empty lines
+$ egrep "director|manager" emp.lst    either word
+$ grep "[[:digit:]]\{10\}" f      a ten-digit number</pre>
+<div class="tip"><b>Marks tip:</b> the examiner is looking for the <b>five headings</b> — Atoms, Quantifiers, Anchors, Alternation/Grouping, Character classes — with at least one example under each. Write the headings first, then fill them.</div>
+</div></div>
+
+<div class="q"><div class="qh">
+<div class="qt">15. What is <code>grep</code>? Explain the grep operation using a simple flow chart. Explain grep with its options. Differentiate between <code>grep</code>, <code>egrep</code> and <code>fgrep</code>.</div>
+<div class="qm"><span class="tag lk">LOCK</span>Part B · Q7 or Q8 · 3–5 marks · <b>Part B 3 of 3, Part A 3 of 3</b></div></div>
+<div class="a">
+<p><b><code>grep</code> stands for Global Regular Expression Print.</b> It searches one or more files <b>line by line</b> for a pattern and prints every line that matches. It is the most used filter in UNIX.</p>
+<p><b>Syntax:</b> <code>grep [options] pattern filename(s)</code> — always <b>quote the pattern</b> so the shell does not expand its metacharacters.</p>
+<pre class="dia">                    +-----------+
+                    |   START   |
+                    +-----+-----+
+                          v
+                 +------------------+
+                 |  Open the file   |
+                 +--------+---------+
+                          v
+                 +------------------+
+                 | Read the next    | <-------------+
+                 | line of the file |               |
+                 +--------+---------+               |
+                          v                         |
+                     /---------\                    |
+                    /  Does it  \      NO           |
+                   /  match the  \ --------+        |
+                   \  pattern ?  /         |        |
+                    \-----------/          |        |
+                          | YES            |        |
+                          v                |        |
+                 +------------------+      |        |
+                 | Print the line   |      |        |
+                 +--------+---------+      |        |
+                          v                |        |
+                          +<---------------+        |
+                          v                         |
+                     /---------\                    |
+                    /   More    \      YES          |
+                   /  lines ?    \ ----------------+
+                   \             /
+                    \-----------/
+                          | NO
+                          v
+                    +-----------+
+                    |    END    |
+                    +-----------+</pre>
+<div class="sub">Options</div>
+<table><thead><tr><th style="width:12%">Option</th><th style="width:36%">Meaning</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>-i</code></td><td><b>Ignore case</b> when matching</td><td><code>grep -i "unix" f</code></td></tr>
+<tr><td><code>-v</code></td><td><b>Invert</b> — print lines that do <b>not</b> match</td><td><code>grep -v "director" emp.lst</code></td></tr>
+<tr><td><code>-c</code></td><td>Print only the <b>count</b> of matching lines</td><td><code>grep -c "unix" f</code></td></tr>
+<tr><td><code>-n</code></td><td>Prefix each line with its <b>line number</b></td><td><code>grep -n "main" prog.c</code></td></tr>
+<tr><td><code>-l</code></td><td>Print only the <b>names of files</b> containing a match</td><td><code>grep -l "bash" *</code></td></tr>
+<tr><td><code>-w</code></td><td>Match the pattern as a <b>whole word</b> only</td><td><code>grep -w "is" f</code></td></tr>
+<tr><td><code>-x</code></td><td>Match only if the <b>whole line</b> is the pattern</td><td><code>grep -x "UNIX" f</code></td></tr>
+<tr><td><code>-e</code></td><td>Specify the pattern — allows <b>several patterns</b></td><td><code>grep -e "a" -e "b" f</code></td></tr>
+<tr><td><code>-E</code></td><td>Use <b>extended</b> regular expressions (same as <code>egrep</code>)</td><td><code>grep -E "cat|dog" f</code></td></tr>
+<tr><td><code>-r</code></td><td>Search <b>recursively</b> through directories</td><td><code>grep -r "TODO" .</code></td></tr></tbody></table>
+<div class="sub">grep vs egrep vs fgrep</div>
+<table><thead><tr><th style="width:14%">Command</th><th style="width:26%">Pattern type</th><th style="width:26%">Supports</th><th>Notes</th></tr></thead><tbody>
+<tr><td><b><code>grep</code></b></td><td><b>Basic</b> regular expressions (BRE)</td><td><code>. * [ ] ^ $</code> directly; <code>+ ? | ( )</code> only if escaped with <code>\</code></td><td>The standard tool. Medium speed.</td></tr>
+<tr><td><b><code>egrep</code></b></td><td><b>Extended</b> regular expressions (ERE)</td><td><code>+ ? | ( ) { }</code> work <b>without backslashes</b></td><td>Same as <code>grep -E</code>. Most powerful, slowest.</td></tr>
+<tr><td><b><code>fgrep</code></b></td><td><b>Fixed strings</b> — no regular expressions at all</td><td>Nothing; every character is literal</td><td>Same as <code>grep -F</code>. <b>Fastest</b>, because there is no pattern matching to do. Use when searching for text containing <code>*</code> or <code>.</code> literally.</td></tr></tbody></table>
+<pre>$ grep "director" emp.lst            lines containing "director"
+$ grep -i "unix" f                   case-insensitive
+$ grep -c "unix" f                   how many lines matched
+$ grep -v "manager" emp.lst          everything EXCEPT managers
+$ egrep "director|manager" emp.lst   either word - needs egrep
+$ fgrep "a*b" f                      finds the literal text a*b
+$ grep "^a.*z$" f                    starts with a, ends with z
+$ grep -l "bash" *                   which files mention bash</pre>
+</div></div>
+
+<div class="q"><div class="qh">
+<div class="qt">16. Explain the <code>tr</code> command with its options / the various ways of using <code>tr</code>. Analyse the use of the <code>uniq</code> command with different options.</div>
+<div class="qm"><span class="tag lk">LOCK</span>Part B · Q8 · 4–5 marks · tr 2 of 3 in the Q8(a) slot; uniq 1 of 3 + <b>2 Part A MCQs</b></div></div>
+<div class="a">
+<div class="sub"><code>tr</code> — translate characters</div>
+<p><code>tr</code> copies standard input to standard output, <b>substituting or deleting characters</b> on the way. Syntax: <code>tr [options] set1 set2</code></p>
+<div class="tip"><b>The exam point most students miss:</b> <code>tr</code> is the only common filter that <b>takes no filename argument</b> — it reads <b>only from standard input</b>. You must use redirection <code>&lt;</code> or a pipe.</div>
+<table><thead><tr><th style="width:14%">Option</th><th style="width:34%">Meaning</th><th>Example</th></tr></thead><tbody>
+<tr><td>(none)</td><td>Translate each character of set1 into the character at the same position in set2</td><td><code>tr 'a-z' 'A-Z' &lt; f</code></td></tr>
+<tr><td><code>-d</code></td><td><b>Delete</b> every character in set1</td><td><code>tr -d '0-9' &lt; f</code></td></tr>
+<tr><td><code>-s</code></td><td><b>Squeeze</b> repeated consecutive characters into one</td><td><code>tr -s ' ' &lt; f</code></td></tr>
+<tr><td><code>-c</code></td><td><b>Complement</b> — operate on every character <b>not</b> in set1</td><td><code>tr -cd '0-9' &lt; f</code></td></tr></tbody></table>
+<pre>$ tr 'a-z' 'A-Z' < file.txt          convert lowercase to uppercase
+$ echo "hello" | tr 'a-z' 'A-Z'
+HELLO
+
+$ tr -d '0-9' < file.txt             remove all digits
+$ tr -s ' ' < file.txt               squeeze multiple spaces into one
+$ tr -s '\n' < file.txt              remove blank lines
+$ tr ':' ' ' < /etc/passwd           replace every colon with a space
+$ tr -cd '0-9' < file.txt            keep ONLY the digits (complement + delete)
+$ cat file | tr '[:lower:]' '[:upper:]'</pre>
+<div class="sub"><code>uniq</code> — handle duplicate lines</div>
+<p><code>uniq</code> removes or reports <b>adjacent duplicate lines</b>. <b>Because it only ever compares a line with the one directly before it, the input must be sorted first</b> — this is why <code>uniq</code> is almost always used after <code>sort</code>.</p>
+<table><thead><tr><th style="width:14%">Option</th><th style="width:36%">Meaning</th><th>Example</th></tr></thead><tbody>
+<tr><td>(none)</td><td>Remove duplicates, keeping <b>one</b> copy of each</td><td><code>sort f | uniq</code></td></tr>
+<tr><td><code>-u</code></td><td>Print only the lines that are <b>not repeated</b> at all</td><td><code>sort f | uniq -u</code></td></tr>
+<tr><td><code>-d</code></td><td>Print only the lines that <b>are duplicated</b>, once each</td><td><code>sort f | uniq -d</code></td></tr>
+<tr><td><code>-c</code></td><td>Prefix each line with the <b>count</b> of its occurrences</td><td><code>sort f | uniq -c</code></td></tr>
+<tr><td><code>-i</code></td><td>Ignore case when comparing</td><td><code>sort f | uniq -i</code></td></tr></tbody></table>
+<pre>$ cat names.txt          $ sort names.txt | uniq -c
+amit                        2 amit
+amit                        1 john
+john                        3 ravi
+ravi
+ravi                     $ sort names.txt | uniq -d      -> amit, ravi
+ravi                     $ sort names.txt | uniq -u      -> john</pre>
+</div></div>
+
+<div class="q likely"><div class="qh">
+<div class="qt">17. Explain the following filter commands with examples: <code>cat</code>, <code>head</code>, <code>tail</code>, <code>cut</code>, <code>paste</code>, <code>sort</code>, <code>wc</code>. Explain the commands used to compare two files.</div>
+<div class="qm"><span class="tag lb">HIGH</span>Part B · Q7 · 3–5 marks · appears in <b>all 3 papers</b>, subset changes each time</div></div>
+<div class="a">
+<p>A <b>filter</b> is a command that reads from standard input, transforms the data, and writes to standard output — which is what lets filters be chained with pipes.</p>
+<table><thead><tr><th style="width:12%">Command</th><th style="width:30%">Purpose &amp; options</th><th>Examples</th></tr></thead><tbody>
+<tr><td><b><code>cat</code></b></td><td><b>Concatenate</b> / display / create files.<br><code>-n</code> number all lines · <code>-s</code> squeeze repeated blank lines · <code>-v</code> show non-printing characters · <code>-b</code> number non-blank lines</td><td><code>cat f1 f2 &gt; f3</code> join two files<br><code>cat &gt; new.txt</code> create (Ctrl+D ends)<br><code>cat -n f</code> with line numbers</td></tr>
+<tr><td><b><code>head</code></b></td><td>Display the <b>beginning</b> of a file. Default 10 lines.<br><code>-n k</code> or <code>-k</code> first k lines</td><td><code>head -5 emp.lst</code><br><code>head -n 3 f</code></td></tr>
+<tr><td><b><code>tail</code></b></td><td>Display the <b>end</b> of a file. Default 10 lines.<br><code>-n k</code> last k lines · <code>+k</code> from line k onward · <code>-f</code> follow a growing file</td><td><code>tail -5 emp.lst</code><br><code>tail +10 f</code> from line 10<br><code>tail -f log.txt</code></td></tr>
+<tr><td><b><code>cut</code></b></td><td>Extract <b>columns</b> from each line.<br><code>-c</code> by character position · <code>-f</code> by field number · <code>-d</code> set the delimiter (<b>default is Tab</b>)</td><td><code>cut -c 1-10 f</code> chars 1–10<br><code>cut -c -3 f</code> chars <b>1–3</b><br><code>cut -d: -f1,3 /etc/passwd</code></td></tr>
+<tr><td><b><code>paste</code></b></td><td>Join files <b>side by side</b>, line for line — the vertical counterpart of <code>cat</code>.<br><code>-d</code> set the delimiter</td><td><code>paste f1 f2</code><br><code>paste -d: f1 f2</code></td></tr>
+<tr><td><b><code>sort</code></b></td><td>Sort lines. <b>Default delimiter is one or more spaces</b>; default order is ASCII.<br><code>-n</code> numeric · <code>-r</code> reverse · <code>-k n</code> sort on field n · <code>-t</code> field delimiter · <code>-u</code> unique · <code>-f</code> fold case</td><td><code>sort names.txt</code><br><code>sort -n marks.txt</code><br><code>sort -t: -k3 -n /etc/passwd</code><br><code>sort -r f</code> descending</td></tr>
+<tr><td><b><code>wc</code></b></td><td><b>Word count</b> — counts lines, words and characters.<br><code>-l</code> lines · <code>-w</code> words · <code>-c</code> characters</td><td><code>wc file.txt</code> all three<br><code>wc -l file.txt</code><br><code>who | wc -l</code> users logged in</td></tr></tbody></table>
+<div class="sub">Why the counts matter (the <code>wc</code> question, Mar 2024)</div>
+<p>Counting lines, words and characters is how you <b>measure</b> data without reading it: <code>wc -l</code> on a log tells you how many events occurred, <code>who | wc -l</code> tells you how many users are logged in, and <code>grep -c</code> combined with <code>wc</code> lets you quantify search results. Because <code>wc</code> is a filter it can end any pipeline, turning any output into a number.</p>
+<div class="sub">Comparing two files</div>
+<table><thead><tr><th style="width:12%">Command</th><th style="width:30%">What it does</th><th>Notes and options</th></tr></thead><tbody>
+<tr><td><b><code>cmp</code></b></td><td>Compares two files <b>byte by byte</b> and reports the first difference, giving its byte and line number.</td><td>Silent when the files are identical. <b>Exit status 0 if identical</b>, 1 if they differ. Works on binary files too.</td></tr>
+<tr><td><b><code>comm</code></b></td><td>Compares two <b>sorted</b> files and prints three columns: lines only in file1, lines only in file2, lines in both.</td><td><code>-1 -2 -3</code> suppress the corresponding column. <code>comm -12 f1 f2</code> shows only the common lines.</td></tr>
+<tr><td><b><code>diff</code></b></td><td>Reports <b>what changes would convert file1 into file2</b>, line by line, using <code>a</code> (add), <code>c</code> (change), <code>d</code> (delete).</td><td><code>-c</code> context format · <code>-u</code> unified format · <code>-i</code> ignore case · <code>-b</code> ignore blank differences. Its output can be fed to <code>patch</code>.</td></tr></tbody></table>
+<pre>$ cmp f1 f2
+f1 f2 differ: byte 12, line 2
+
+$ comm f1 f2          three columns: only-in-f1 | only-in-f2 | in-both
+$ diff -u f1 f2       unified diff showing the edits needed</pre>
+</div></div>
+
+<h2>UNIT V — Shell Scripts <span>PART B · Q9 or Q10 · 8 marks &nbsp;|&nbsp; ⚠ no past-paper history</span></h2>
+
+<div class="warn" style="margin-top:-1mm">
+<b>Why this unit has no "appeared in" line.</b> In all three past papers the Unit V slot held <b>grep and regular expressions</b> — which your syllabus has moved into Unit IV. Shell scripting is new to this position, so the questions below are derived from the syllabus topic order and the paper's own 8-mark two-part structure. <b>Treat them as a strong, reasoned guess rather than a repeat.</b> They cover every construct the syllabus names, so the unit is fully covered whichever way it is split.
+</div>
+
+<div class="q new"><div class="qh">
+<div class="qt">18. Explain the use of <code>test</code> and <code>[ ]</code> to evaluate expressions. Explain the <code>if</code> conditional with its forms.</div>
+<div class="qm"><span class="tag ln">UNIT V</span>Part B · Q9(a) · 4–5 marks · first major construct named in the syllabus</div></div>
+<div class="a">
+<p>The shell has no built-in comparison operators. <b><code>test</code> is a command that evaluates an expression and returns an exit status</b> — <b>0 (true)</b> if the expression holds, <b>non-zero (false)</b> otherwise. <code>[ ]</code> is simply another name for <code>test</code>.</p>
+<pre>test $a -gt $b          these two lines are
+[ $a -gt $b ]           exactly equivalent</pre>
+<div class="tip"><b>The rule that costs the most marks:</b> <code>[</code> is a <b>command</b>, not punctuation — so it needs <b>spaces on both sides of everything</b>. <code>[ $a -gt $b ]</code> is correct; <code>[$a -gt $b]</code> is a syntax error.</div>
+<div class="sub">Numeric comparison</div>
+<table><thead><tr><th style="width:16%">Operator</th><th style="width:34%">True when</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>-eq</code></td><td>equal to</td><td><code>[ $a -eq $b ]</code></td></tr>
+<tr><td><code>-ne</code></td><td>not equal to</td><td><code>[ $a -ne 0 ]</code></td></tr>
+<tr><td><code>-gt</code></td><td>greater than</td><td><code>[ $a -gt $b ]</code></td></tr>
+<tr><td><code>-ge</code></td><td>greater than or equal to</td><td><code>[ $a -ge 10 ]</code></td></tr>
+<tr><td><code>-lt</code></td><td>less than</td><td><code>[ $a -lt $b ]</code></td></tr>
+<tr><td><code>-le</code></td><td>less than or equal to</td><td><code>[ $a -le 100 ]</code></td></tr></tbody></table>
+<div class="sub">String comparison</div>
+<table><thead><tr><th style="width:16%">Operator</th><th style="width:34%">True when</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>=</code></td><td>the two strings are identical</td><td><code>[ "$s1" = "$s2" ]</code></td></tr>
+<tr><td><code>!=</code></td><td>the strings differ</td><td><code>[ "$s1" != "abc" ]</code></td></tr>
+<tr><td><code>-z</code></td><td>the string has <b>zero</b> length (empty)</td><td><code>[ -z "$s" ]</code></td></tr>
+<tr><td><code>-n</code></td><td>the string has <b>non-zero</b> length</td><td><code>[ -n "$s" ]</code></td></tr></tbody></table>
+<p><b>Note:</b> numeric comparison uses <code>-eq</code>; string comparison uses <code>=</code>. Mixing them up is the classic error. Always quote string variables so an empty value does not break the syntax.</p>
+<div class="sub">File tests</div>
+<table><thead><tr><th style="width:16%">Operator</th><th style="width:34%">True when the file…</th><th>Example</th></tr></thead><tbody>
+<tr><td><code>-e</code></td><td>exists</td><td><code>[ -e file ]</code></td></tr>
+<tr><td><code>-f</code></td><td>exists and is a <b>regular file</b></td><td><code>[ -f note.txt ]</code></td></tr>
+<tr><td><code>-d</code></td><td>exists and is a <b>directory</b></td><td><code>[ -d /home ]</code></td></tr>
+<tr><td><code>-r</code> / <code>-w</code> / <code>-x</code></td><td>is readable / writable / executable</td><td><code>[ -r file ]</code></td></tr>
+<tr><td><code>-s</code></td><td>exists and has <b>size greater than zero</b></td><td><code>[ -s file ]</code></td></tr></tbody></table>
+<div class="sub">Logical operators</div>
+<p><code>-a</code> logical AND · <code>-o</code> logical OR · <code>!</code> logical NOT<br>
+<code>[ $a -gt 0 -a $a -lt 100 ]</code> — true when a is between 0 and 100<br>
+<code>[ ! -f file ]</code> — true when the file does <b>not</b> exist</p>
+<div class="sub">The <code>if</code> conditional</div>
+<p><code>if</code> runs a command and branches on its <b>exit status</b> — 0 means the <code>then</code> branch runs. It is closed by <code>fi</code> (<code>if</code> reversed).</p>
+<pre># Form 1 - simple if            # Form 2 - if...else
+if [ $a -gt $b ]                if [ $a -gt $b ]
+then                            then
+    echo "a is greater"             echo "a is greater"
+fi                              else
+                                    echo "b is greater or equal"
+                                fi
+
+# Form 3 - if...elif...else (multiway)
+if [ $a -gt $b ]
+then
+    echo "$a is greater"
+elif [ $a -eq $b ]
+then
+    echo "both are equal"
+else
+    echo "$b is greater"
+fi</pre>
+<p><b><code>if</code> can test any command, not just <code>test</code>:</b></p>
+<pre>if grep -q "unix" file.txt
+then
+    echo "Pattern found"
+fi                    # branches on grep's own exit status</pre>
+</div></div>
+
+<div class="q new"><div class="qh">
+<div class="qt">19. Explain the <code>case</code> conditional with syntax and an example. Explain <code>expr</code> for computation and string handling.</div>
+<div class="qm"><span class="tag ln">UNIT V</span>Part B · Q10(a) · 4–5 marks · the classic menu-driven-script question</div></div>
+<div class="a">
+<div class="sub">The <code>case</code> conditional</div>
+<p><code>case</code> compares one value against several <b>patterns</b> and runs the matching block. It is cleaner than a long <code>if-elif</code> chain when you are testing the same variable repeatedly, and unlike <code>if</code> it does <b>pattern</b> matching, so wildcards work.</p>
+<pre>case $variable in
+    pattern1)
+        commands
+        ;;
+    pattern2 | pattern3)        # several patterns, separated by |
+        commands
+        ;;
+    *)                          # default - matches anything
+        commands
+        ;;
+esac</pre>
+<ul>
+<li>Each block <b>must end with <code>;;</code></b> — this is what stops execution falling through to the next pattern.</li>
+<li><code>*)</code> is the <b>default</b> case; put it last, as patterns are tried in order.</li>
+<li>The whole construct is closed by <b><code>esac</code></b> (<code>case</code> spelled backwards).</li>
+<li>Patterns may use shell wildcards: <code>[Yy]*)</code> matches yes, Yes, y, Y…</li>
+</ul>
+<div class="sub"><code>expr</code> — computation and string handling</div>
+<p>The shell treats everything as a string, so <b><code>expr</code> is the command that performs arithmetic</b>. It evaluates an expression and prints the result.</p>
+<div class="tip"><b>Two rules that break scripts:</b> every operand and operator must be <b>separated by spaces</b> (<code>expr 5+3</code> prints "5+3"; <code>expr 5 + 3</code> prints 8), and the multiplication sign must be <b>escaped</b> as <code>\*</code> because <code>*</code> is a shell wildcard.</p>
+<pre>$ expr 5 + 3          8         addition
+$ expr 10 - 4         6         subtraction
+$ expr 10 \* 2        20        multiplication - note the backslash
+$ expr 10 / 3         3         integer division - remainder discarded
+$ expr 10 % 3         1         modulus (remainder)
+
+$ a=5 ; b=3
+$ sum=`expr $a + $b`            store the result in a variable
+$ echo $sum
+8
+$ sum=$(expr $a + $b)           the modern form does the same</pre>
+<p><b>String handling with <code>expr</code>:</b></p>
+<table><thead><tr><th style="width:36%">Expression</th><th style="width:16%">Result</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><code>expr length "hello"</code></td><td>5</td><td>Number of characters in the string</td></tr>
+<tr><td><code>expr substr "hello" 2 3</code></td><td>ell</td><td>Substring: 3 characters starting at position 2</td></tr>
+<tr><td><code>expr index "hello" l</code></td><td>3</td><td>Position of the first occurrence of the character</td></tr></tbody></table>
+<div class="sub">Worked example — menu-driven calculator (<code>case</code> + <code>expr</code> + <code>read</code>)</div>
+<pre>#!/bin/sh
+# Menu-driven calculator using case and expr
+
+echo "1. Add"
+echo "2. Subtract"
+echo "3. Multiply"
+echo "4. Divide"
+echo -n "Enter your choice: "
+read ch
+echo -n "Enter two numbers: "
+read a b
+
+case $ch in
+    1) echo "Sum = `expr $a + $b`"
+       ;;
+    2) echo "Difference = `expr $a - $b`"
+       ;;
+    3) echo "Product = `expr $a \* $b`"
+       ;;
+    4) if [ $b -eq 0 ]
+       then
+           echo "Error: division by zero"
+       else
+           echo "Quotient = `expr $a / $b`"
+       fi
+       ;;
+    *) echo "Invalid choice"
+       ;;
+esac</pre>
+<pre>Sample run:
+$ sh calc.sh
+1. Add
+2. Subtract
+3. Multiply
+4. Divide
+Enter your choice: 3
+Enter two numbers: 6 7
+Product = 42</pre>
+</div></div>
+
+<div class="q new"><div class="qh">
+<div class="qt">20. Explain the use of command line arguments. Explain <code>exit</code> and the exit status of a command, and the logical operators <code>&amp;&amp;</code> and <code>||</code>. How is a script made interactive using <code>read</code>?</div>
+<div class="qm"><span class="tag ln">UNIT V</span>Part B · Q9(b) · 3–4 marks · four syllabus lines, one answer</div></div>
+<div class="a">
+<div class="sub">Making a script interactive — <code>read</code></div>
+<p><b><code>read</code> takes a line from standard input and stores it in one or more variables</b>, which is what turns a fixed script into an interactive one.</p>
+<pre>echo -n "Enter your name: "     # -n keeps the cursor on the same line
+read name
+echo "Hello, $name"
+
+read a b c                      # one line split on whitespace into three variables
+read                            # value goes into the default variable REPLY</pre>
+<div class="sub">Command line arguments (positional parameters)</div>
+<p>Arguments typed after the script name are placed into <b>positional parameters</b>, so a script can be given data without prompting.</p>
+<table><thead><tr><th style="width:14%">Parameter</th><th>Holds</th></tr></thead><tbody>
+<tr><td><code>$0</code></td><td>The <b>name of the script</b> as it was invoked</td></tr>
+<tr><td><code>$1</code> … <code>$9</code></td><td>The first through ninth arguments</td></tr>
+<tr><td><code>$#</code></td><td>The <b>number of arguments</b> passed (excludes <code>$0</code>)</td></tr>
+<tr><td><code>$*</code></td><td>All arguments, as a <b>single string</b></td></tr>
+<tr><td><code>$@</code></td><td>All arguments, as <b>separate words</b> — the safer of the two when quoted</td></tr>
+<tr><td><code>$?</code></td><td><b>Exit status of the last command executed</b></td></tr>
+<tr><td><code>$$</code></td><td>The <b>PID</b> of the current shell</td></tr></tbody></table>
+<pre>$ cat args.sh
+#!/bin/sh
+echo "Script name      : $0"
+echo "First argument   : $1"
+echo "Second argument  : $2"
+echo "Number of args   : $#"
+echo "All arguments    : $*"
+
+$ sh args.sh unix shell programming
+Script name      : args.sh
+First argument   : unix
+Second argument  : shell
+Number of args   : 3
+All arguments    : unix shell programming</pre>
+<div class="sub"><code>exit</code> and exit status</div>
+<ul>
+<li><b>Every command returns an exit status</b> to the shell when it finishes — a number from 0 to 255.</li>
+<li><b>0 means success. Any non-zero value means failure.</b> (This is the reverse of C's convention for truth, and is a favourite MCQ.)</li>
+<li>The status of the most recent command is held in <b><code>$?</code></b>. Read it <b>immediately</b> — the very next command overwrites it.</li>
+<li><code>exit n</code> terminates a script and returns status n to whoever called it. <code>exit 0</code> conventionally signals success.</li>
+</ul>
+<pre>$ grep "unix" file.txt > /dev/null
+$ echo $?
+0                     # 0 -> the pattern was found
+
+$ grep "xyz" file.txt > /dev/null
+$ echo $?
+1                     # non-zero -> not found</pre>
+<div class="sub">Logical operators <code>&amp;&amp;</code> and <code>||</code></div>
+<p>These chain commands based on the exit status of the one before, giving <b>conditional execution</b> without writing a full <code>if</code>.</p>
+<table><thead><tr><th style="width:22%">Form</th><th>Behaviour</th></tr></thead><tbody>
+<tr><td><code>cmd1 &amp;&amp; cmd2</code></td><td>Run <code>cmd2</code> <b>only if <code>cmd1</code> succeeded</b> (exit status 0)</td></tr>
+<tr><td><code>cmd1 || cmd2</code></td><td>Run <code>cmd2</code> <b>only if <code>cmd1</code> failed</b> (non-zero status)</td></tr></tbody></table>
+<pre>$ grep "unix" file.txt && echo "Pattern found"
+$ grep "xyz" file.txt || echo "Pattern not found"
+
+$ [ -f data.txt ] && echo "exists" || echo "missing"
+       # the combined idiom: if-then-else on a single line
+
+$ mkdir project && cd project
+       # only cd in if the directory was actually created</pre>
+</div></div>
+
+<div class="q new"><div class="qh">
+<div class="qt">21. Explain <code>while</code> looping and <code>for</code> looping with a list. Explain <code>set</code> and <code>shift</code> for manipulating positional parameters, and the use of <code>$0</code> to call a script by different names.</div>
+<div class="qm"><span class="tag ln">UNIT V</span>Part B · Q10(b) · 3–4 marks · the last syllabus lines of the unit</div></div>
+<div class="a">
+<div class="sub"><code>while</code> — loop while a condition holds</div>
+<p>Repeats the body <b>as long as the condition is true</b> (exit status 0). Closed by <code>done</code>. Use it when the number of repetitions is not known in advance.</p>
+<pre>i=1
+while [ $i -le 5 ]
+do
+    echo "Number is $i"
+    i=`expr $i + 1`          # the counter MUST be incremented,
+done                         # or the loop never ends</pre>
+<p><b>Reading a file line by line</b> is the other standard use:</p>
+<pre>while read line
+do
+    echo "Line: $line"
+done < file.txt</pre>
+<div class="sub"><code>for</code> — loop over a list</div>
+<p>Takes each item of a list in turn, assigns it to the variable, and runs the body once per item. Use it when the set of values is known.</p>
+<pre>for name in Amit John Ravi          # explicit list
+do
+    echo "Hello, $name"
+done
+
+for f in *.txt                      # wildcard expands to a file list
+do
+    echo "Processing $f"
+    wc -l $f
+done
+
+for i in 1 2 3 4 5                  # a numeric list
+do
+    echo "Square of $i is `expr $i \* $i`"
+done
+
+for user in `who | cut -d' ' -f1`   # list from command substitution
+do
+    echo "Logged in: $user"
+done
+
+for arg in "$@"                     # loop over the script's arguments
+do
+    echo "Argument: $arg"
+done</pre>
+<div class="sub"><code>set</code> — assigning positional parameters</div>
+<p><code>set</code> with arguments <b>assigns them to the positional parameters</b> <code>$1, $2, $3…</code>, overwriting whatever was there. This makes it a simple way to split a string into fields.</p>
+<pre>$ set 10 20 30
+$ echo $1 $2 $3
+10 20 30
+$ echo $#
+3
+
+$ set `date`                  # split date's output into fields
+$ echo $1                     Wed          (day)
+$ echo $2                     Sep          (month)
+$ echo $6                     2025         (year)</pre>
+<div class="sub"><code>shift</code> — moving the parameters left</div>
+<p><code>shift</code> <b>discards <code>$1</code> and moves every other parameter one place to the left</b>: <code>$2</code> becomes <code>$1</code>, <code>$3</code> becomes <code>$2</code>, and <code>$#</code> decreases by one. <code>shift n</code> shifts by n places.</p>
+<p><b>Why it exists:</b> only <code>$1</code> to <code>$9</code> are directly accessible. <code>shift</code> lets a script walk through <b>any</b> number of arguments by repeatedly examining <code>$1</code> and shifting.</p>
+<pre>$ set a b c d
+$ echo $1 $2 $3 $4       ->  a b c d
+$ shift
+$ echo $1 $2 $3          ->  b c d        ("a" is gone, $# is now 3)
+$ shift 2
+$ echo $1                ->  d</pre>
+<pre>#!/bin/sh
+# Print every argument, however many there are
+echo "Total arguments: $#"
+while [ $# -gt 0 ]
+do
+    echo "Argument: $1"
+    shift
+done</pre>
+<div class="sub"><code>$0</code> — calling a script by different names</div>
+<p><code>$0</code> holds <b>the name the script was actually invoked by</b>, not the name it was written as. By creating links to one script under several names and branching on <code>$0</code>, a <b>single script can behave differently depending on how it was called</b> — which is how several real UNIX utilities are implemented.</p>
+<pre>$ ln greet hello            # create links to the same script
+$ ln greet bye
+
+$ cat greet
+#!/bin/sh
+case $0 in
+    *hello) echo "Hello! Welcome." ;;
+    *bye)   echo "Goodbye! See you." ;;
+    *)      echo "Usage: call me as hello or bye" ;;
+esac
+
+$ ./hello        ->  Hello! Welcome.
+$ ./bye          ->  Goodbye! See you.</pre>
+<p>The advantage is a <b>single copy of the code</b> with shared logic, instead of two nearly identical scripts to maintain.</p>
+</div></div>
+
+<div class="q new"><div class="qh">
+<div class="qt">22. Write shell scripts for the following. <i>(The lab component is shell script programs — expect at least one "write a script to…" part.)</i></div>
+<div class="qm"><span class="tag ln">UNIT V</span>Part B · Q9(b) or Q10(b) · 3–5 marks each</div></div>
+<div class="a">
+<div class="sub">(a) Find the largest of three numbers</div>
+<pre>#!/bin/sh
+# Largest of three numbers - uses read, if-elif-else, test
+
+echo -n "Enter three numbers: "
+read a b c
+
+if [ $a -gt $b -a $a -gt $c ]
+then
+    echo "$a is the largest"
+elif [ $b -gt $c ]
+then
+    echo "$b is the largest"
+else
+    echo "$c is the largest"
+fi
+
+# Sample run:
+# $ sh largest.sh
+# Enter three numbers: 12 45 23
+# 45 is the largest</pre>
+<div class="sub">(b) Check whether a number is even or odd</div>
+<pre>#!/bin/sh
+# Even or odd - uses expr for modulus
+
+echo -n "Enter a number: "
+read n
+
+r=`expr $n % 2`
+
+if [ $r -eq 0 ]
+then
+    echo "$n is even"
+else
+    echo "$n is odd"
+fi
+
+# Sample run:
+# Enter a number: 7
+# 7 is odd</pre>
+<div class="sub">(c) Factorial of a number</div>
+<pre>#!/bin/sh
+# Factorial - uses while and expr
+
+echo -n "Enter a number: "
+read n
+
+f=1
+i=1
+while [ $i -le $n ]
+do
+    f=`expr $f \* $i`
+    i=`expr $i + 1`
+done
+
+echo "Factorial of $n is $f"
+
+# Sample run:
+# Enter a number: 5
+# Factorial of 5 is 120</pre>
+<div class="sub">(d) Reverse a number and find the sum of its digits</div>
+<pre>#!/bin/sh
+# Reverse a number and sum its digits - while + expr
+
+echo -n "Enter a number: "
+read n
+
+rev=0
+sum=0
+temp=$n
+
+while [ $temp -gt 0 ]
+do
+    d=`expr $temp % 10`          # extract the last digit
+    rev=`expr $rev \* 10 + $d`   # build the reversed number
+    sum=`expr $sum + $d`         # accumulate the digit sum
+    temp=`expr $temp / 10`       # drop the last digit
+done
+
+echo "Reverse of $n is $rev"
+echo "Sum of digits is $sum"
+
+# Sample run:
+# Enter a number: 1234
+# Reverse of 1234 is 4321
+# Sum of digits is 10</pre>
+<div class="sub">(e) Print the first n Fibonacci numbers</div>
+<pre>#!/bin/sh
+# Fibonacci series - while + expr
+
+echo -n "How many terms? "
+read n
+
+a=0
+b=1
+i=1
+
+echo "Fibonacci series:"
+while [ $i -le $n ]
+do
+    echo -n "$a "
+    c=`expr $a + $b`
+    a=$b
+    b=$c
+    i=`expr $i + 1`
+done
+echo
+
+# Sample run:
+# How many terms? 7
+# Fibonacci series:
+# 0 1 1 2 3 5 8</pre>
+<div class="sub">(f) Count the arguments passed and display each one</div>
+<pre>#!/bin/sh
+# Walk through any number of arguments - $# and shift
+
+if [ $# -eq 0 ]
+then
+    echo "Usage: $0 arg1 arg2 ..."
+    exit 1
+fi
+
+echo "Number of arguments: $#"
+echo "Script name: $0"
+
+n=1
+while [ $# -gt 0 ]
+do
+    echo "Argument $n: $1"
+    n=`expr $n + 1`
+    shift
+done
+
+# Sample run:
+# $ sh args.sh unix shell programming
+# Number of arguments: 3
+# Script name: args.sh
+# Argument 1: unix
+# Argument 2: shell
+# Argument 3: programming</pre>
+<div class="sub">(g) Check whether a file exists and report its permissions</div>
+<pre>#!/bin/sh
+# File tests - -e -f -d -r -w -x
+
+echo -n "Enter a filename: "
+read fname
+
+if [ ! -e $fname ]
+then
+    echo "$fname does not exist"
+    exit 1
+fi
+
+if [ -d $fname ]
+then
+    echo "$fname is a directory"
+elif [ -f $fname ]
+then
+    echo "$fname is a regular file"
+fi
+
+[ -r $fname ] && echo "Readable"
+[ -w $fname ] && echo "Writable"
+[ -x $fname ] && echo "Executable"
+
+# Sample run:
+# Enter a filename: script.sh
+# script.sh is a regular file
+# Readable
+# Writable
+# Executable</pre>
+<div class="sub">(h) Count the number of files in a directory using a <code>for</code> loop</div>
+<pre>#!/bin/sh
+# for looping with a list
+
+count=0
+for f in *
+do
+    if [ -f $f ]
+    then
+        echo "File: $f"
+        count=`expr $count + 1`
+    fi
+done
+
+echo "Total regular files: $count"</pre>
+<div class="tip"><b>Marking traps — check every script you write against these:</b><br>
+• Start with <code>#!/bin/sh</code> &nbsp;• Use <code>expr</code> for arithmetic, <b>never</b> <code>$(( ))</code> &nbsp;• Use <code>[ ]</code>, <b>never</b> <code>[[ ]]</code><br>
+• <b>Spaces are required</b> inside <code>[ ]</code> and around every <code>expr</code> operand &nbsp;• <b>No spaces</b> around <code>=</code> when assigning<br>
+• Escape multiplication as <code>\*</code> &nbsp;• Close with <code>fi</code>, <code>done</code>, <code>esac</code> &nbsp;• End every <code>case</code> branch with <code>;;</code><br>
+• Increment the counter in a <code>while</code> loop, or it never terminates &nbsp;• Add a <b>sample run</b> as a comment — lab records need the output transcript
+</div>
+</div></div>
+
+<h2>PART A — the ten 1-mark MCQs <span>10 × 1 = 10 marks · no choice · 2 per unit</span></h2>
+<div class="q"><div class="a">
+<p>Part A is <b>always two questions per unit, in unit order</b>. These are the facts the MCQs have actually tested, with the answer.</p>
+<table><thead><tr><th style="width:7%">Slot</th><th style="width:7%">Unit</th><th style="width:38%">Question seen</th><th>Answer to remember</th></tr></thead><tbody>
+<tr><td><b>Q1</b></td><td>I</td><td>The UNIX shell is both ____ and ____ language</td><td><b>scripting, interpreter</b>. Also: the shell is the interface between user and kernel.</td></tr>
+<tr><td><b>Q2</b></td><td>I</td><td>Default permission for ordinary files / octal for rwxr-xr-x / components in a relative chmod expression</td><td>Default <b>rw-rw-rw- (666)</b> · <b>755</b> = rwxr-xr-x · <b>744</b> = rwxr--r-- · relative mode has <b>3 components</b> (who + operator + permission)</td></tr>
+<tr><td><b>Q3</b></td><td>II</td><td>Command showing process attributes / option to create a tar archive</td><td><b><code>ps</code></b> shows process attributes · <b><code>tar -c</code></b> creates, <code>-x</code> extracts, <code>-t</code> lists, <code>-f</code> names the file</td></tr>
+<tr><td><b>Q4</b></td><td>II</td><td>Utility to test reachability of a host / command to manipulate the TCP/IP routing table / command to compare two files</td><td><b><code>ping</code></b> tests reachability · <b><code>route</code></b> manipulates the routing table · <b><code>diff</code> / <code>cmp</code> / <code>comm</code></b> compare files</td></tr>
+<tr><td><b>Q5</b></td><td>III</td><td>Symbol to connect different streams / to push a process to background / command that copies stdin to stdout and a file</td><td><b><code>|</code></b> connects streams (pipe) · <b><code>&amp;</code></b> backgrounds a process · <b><code>tee</code></b> copies stdin to stdout <i>and</i> a file</td></tr>
+<tr><td><b>Q6</b></td><td>III</td><td>Symbols that redirect output to a file or another program / keys to suspend a job</td><td><b><code>|</code>, <code>&gt;</code> and <code>&gt;&gt;</code></b> — when "all of these" is an option it is usually correct · <b>Ctrl+Z</b> suspends a foreground job</td></tr>
+<tr><td><b>Q7</b></td><td>IV</td><td>Option used with <code>cut</code> for fields / what <code>cut -c -3</code> cuts</td><td><b><code>-f</code></b> = fields, <code>-c</code> = characters, <code>-d</code> = delimiter · <code>cut -c -3</code> gives columns <b>1–3</b></td></tr>
+<tr><td><b>Q8</b></td><td>IV</td><td>Option with <code>uniq</code> for repeated / non-repeated lines · <code>sort</code> default delimiter · exit status of <code>cmp</code></td><td><b><code>-d</code></b> repeated, <b><code>-u</code></b> non-repeated, <code>-c</code> count · <code>sort</code> default delimiter is <b>one or more spaces</b> · <code>cmp</code> returns <b>0</b> if the files are identical</td></tr>
+<tr><td><b>Q9</b></td><td>V</td><td><i>No precedent — expect shell scripting</i> (old papers had grep here)</td><td><b><code>$?</code></b> = exit status of the last command, <b>0 = success</b> · <b><code>$#</code></b> = number of arguments · <b><code>$0</code></b> = script name · <i>grep fallback:</i> <code>-i</code> ignore case, <code>-c</code> count, <code>-v</code> invert</td></tr>
+<tr><td><b>Q10</b></td><td>V</td><td><i>No precedent — expect shell scripting</i> (old papers had regex here)</td><td><b><code>shift</code></b> moves positional parameters left · <b><code>esac</code></b> closes <code>case</code>, <b><code>fi</code></b> closes <code>if</code>, <b><code>done</code></b> closes loops · <b><code>-eq</code></b> is numeric, <b><code>=</code></b> is string · <i>regex fallback:</i> <b><code>*</code></b> matches the immediately preceding character</td></tr>
+</tbody></table>
+</div></div>
+
+<div class="ft">
+<b>How these predictions were made.</b> All 30 Part-B sub-questions and 30 Part-A MCQs from the April 2023 (CSAEC310), August 2023 backlog (CSAEC410) and March 2024 (CSAEC310) papers were tabulated, mapped onto your current syllabus, filtered for out-of-syllabus content (<code>sed</code>, <code>awk</code>), and ranked by how often each topic held a given question slot.<br><br>
+<b>Stated plainly:</b> Units I–IV rest on real repetition across three papers and are as reliable as three papers can make them. <b>Unit V has no precedent at all</b> — those questions and answers are derived from the syllabus topic list, so treat that section as thorough preparation of the required material rather than a prediction of the exact wording. Three papers is a small sample, and two of the three predate your syllabus revision.
+</div>
+
+</body></html>
